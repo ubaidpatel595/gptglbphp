@@ -1,0 +1,41 @@
+#login-form{
+    text-align: center;
+    background-color: rgba(116, 156, 198, 0.656);
+    width:max-content;
+    min-height: 220px;
+    margin: auto;
+    margin-top: 10%;
+    padding: 20px;
+    font-size: 20px;
+    border-radius: 10px;
+}
+#login-form table{
+    margin: auto;
+    text-align: center;
+}
+tr{
+    height: 40px;
+}
+td{
+    text-align: right;
+}
+#submit-button{
+    border: none;
+    border-radius: 5px;
+    height: 30px;
+    font-size: 20px;
+    font-weight: bold;
+    background-color: inherit;
+    border: 1px solid;
+    margin: auto;
+    margin-top: 20px;
+}
+td input{
+    border: none;
+    outline: none;
+    border-bottom: 1px solid;
+    background-color: inherit;
+}
+body{
+    overflow-y:scroll;
+}

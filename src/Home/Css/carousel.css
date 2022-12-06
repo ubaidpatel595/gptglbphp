@@ -1,0 +1,44 @@
+#carousel{
+    background-color: rgba(83, 108, 112, 0.544);
+    width: 50%;
+    margin: auto;
+    margin-top: 20px;
+    position: relative;
+    z-index: 0;
+}
+#carousel img{
+    max-height:50vh;
+    max-width: 100%;
+    display: block;
+    margin: auto;
+}
+
+#prev-btn{
+    position: absolute;
+    top: 50%;
+    left:10px;
+    float: left;
+    text-align: start;
+    width: 30px;
+}
+#next-btn{
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    float: right;
+    text-align: end;
+    width: 30px;
+}
+#prev-btn,#next-btn{
+    font-size: 24px;
+    font-weight: bold;
+}
+#prev-btn:hover,#next-btn:hover{
+    background-color: rgba(202, 167, 167, 0.57);
+}
+@media screen and (max-width: 620px) {
+    #carousel{
+        width: 100%;
+    }
+}
+
