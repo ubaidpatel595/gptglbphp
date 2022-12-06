@@ -1,6 +1,7 @@
 import { useState } from "react";
 import "../Css/hod.css";
 import Upload from "../../Apis/Upload";
+import AssignSub from "../../Apis/AssignSub";
 
 function show(elem,hide){
     let opt = document.getElementById(elem);
@@ -20,7 +21,7 @@ const [type,setType]=useState("aa");
                 <button onClick={()=>{show('gen_reports',['action','upload','upload_opts'])}}>Generate Reports</button><br/>
                 <button onClick={()=>{show('upload',['gen_reports','action','upload_opts'])}}>Upload</button><br/>
             </div>
-            <iframe src="AssignSub" frameborder="0" id="action"></iframe>
+            <div id="action"><AssignSub/></div>
             <div id="gen_reports">
                 <button>Shortage Of Attendance</button><br/>
                 <button>Students Report</button><br/>
