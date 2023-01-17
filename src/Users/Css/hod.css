@@ -29,7 +29,7 @@ text-align: center;
     margin-top: 10px;
     padding-right: 20px;
     margin-left:0px;
-    height: 80vh;
+    
 }
 #act-btns button{
     border-radius: 10px;
@@ -55,10 +55,9 @@ text-align: center;
 #upload,#gen_reports,#delete{
     display: none;
 }
-#action,#upload_opts{
+#action,#upload_opts,#assigned,#markAttendance{
     margin-top: 10px;
-    width: 50vw;
-    height: 50vw;
+    min-width: 50vw;
     display: none;
 }
 #actions{
@@ -70,4 +69,7 @@ text-align: center;
 }
 button{
     cursor: pointer;
+}
+#assigned,#markAttendance{
+    text-align: center;
 }

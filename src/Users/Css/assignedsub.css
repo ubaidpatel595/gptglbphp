@@ -1,0 +1,34 @@
+.assignedsub{
+    width: 100%;
+    background-color: rgba(119, 164, 185, 0.776);
+    margin-top: 30px;
+    border-radius: 20px;
+    text-align: center;
+    padding-top:30px;
+    padding-bottom:30px;
+}
+.assignedsub table{
+    text-align: center;
+    margin: auto;
+    border: 1px solid;
+    border-collapse: collapse;
+   
+}
+.assignedsub td,.assignedsub th{
+    min-width: 200px;
+    text-align: center;
+    border-bottom: 1px solid;
+    border-collapse: collapse;
+}
+#submit-button{
+    border: none;
+    border-radius: 5px;
+    height: 30px;
+    font-size: 20px;
+    font-weight: bold;
+    background-color: inherit;
+    border: 1px solid;
+    margin: auto;
+    margin-top: 20px;
+    background-color:rgba(119, 164, 185, 0.776);
+}

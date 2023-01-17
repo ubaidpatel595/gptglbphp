@@ -7,6 +7,7 @@ import Home from './Home/Home';
 import Courses from "./Home/Courses";
 import Admission from './Home/Admission';
 import Login from './Home/Login';
+import Logout from './Home/Logout';
 import Register from './Home/Register';
 import About from './Home/About';
 
@@ -23,19 +24,20 @@ import Attendance from './Apis/Attendance';
 import Syllabus from './Apis/Syllabus';
 import Reports from './Apis/Reports';
 
+
 import reportWebVitals from './reportWebVitals';
 import {
   createBrowserRouter,
-  createRoutesFromElements,
-  Route,
   RouterProvider,
 } from "react-router-dom";
 
 const router = createBrowserRouter([
   {path:'/',element:<><Main/><Home/></>},
+  {path:'/Home',element:<><Main/><Home/></>},
   {path:'courses',element:<><Main/><Courses/></>},
   {path:'admission',element:<><Main/><Admission/></>},
   {path:'login',element:<><Main/><Login/></>},
+  {path:'logout',element:<><Main/><Logout/></>},
   {path:'register',element:<><Main/><Register/></>},
   {path:'about',element:<><Main/><About/></>},
   {path:'admin',element:<><Main/><Admin/></>},
@@ -54,11 +56,9 @@ const router = createBrowserRouter([
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
     <React.Fragment>
        <RouterProvider router={router}/>
     </React.Fragment>
-  </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function

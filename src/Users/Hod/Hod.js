@@ -2,6 +2,8 @@ import { useState } from "react";
 import "../Css/hod.css";
 import Upload from "../../Apis/Upload";
 import AssignSub from "../../Apis/AssignSub";
+import AssignedSub from "../../Apis/assignedSub";
+import MarkAttendance from "../../Apis/markAttendance";
 
 function show(elem,hide){
     let opt = document.getElementById(elem);
@@ -17,11 +19,17 @@ const [type,setType]=useState("aa");
         <div id="actions">
         <div class="flex-hod" >
             <div id="act-btns">
-                <button onClick={()=>{show('action',['gen_reports','upload','upload_opts'])}}>Assign Subject</button><br/>
-                <button onClick={()=>{show('gen_reports',['action','upload','upload_opts'])}}>Generate Reports</button><br/>
-                <button onClick={()=>{show('upload',['gen_reports','action','upload_opts'])}}>Upload</button><br/>
+                <button onClick={()=>{show('action',['gen_reports','upload','upload_opts','assigned','markAttendance'])}}>Assign Subject</button><br/>
+                <button onClick={()=>{show('assigned',['gen_reports','upload','upload_opts','action','markAttendance'])}}>Assigned Subjects</button><br/>
+                <button onClick={()=>{show('markAttendance',['action','upload','upload_opts','assigned','gen_reports'])}}>Mark Attendance</button><br/>
+                <button onClick={()=>{show('gen_reports',['action','upload','upload_opts','assigned','markAttendance'])}}>Modify Attendance</button><br/>
+                <button onClick={()=>{show('gen_reports',['action','upload','upload_opts','assigned','markAttendance'])}}>Generate Reports</button><br/>
+                <button onClick={()=>{show('upload',['gen_reports','action','upload_opts','assigned','markAttendance'])}}>Upload</button><br/>
             </div>
             <div id="action"><AssignSub/></div>
+            <div id="assigned"><AssignedSub/></div>
+            <div id="markAttendance"><MarkAttendance/></div>
+            
             <div id="gen_reports">
                 <button>Shortage Of Attendance</button><br/>
                 <button>Students Report</button><br/>

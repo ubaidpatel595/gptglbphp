@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test</title>
+    <script>
+     function loadDoc() {
+  const xhttp = new XMLHttpRequest();
+  xhttp.onload = function() {
+    document.getElementById("demo").innerHTML = this.responseText;
+    console.log(a=JSON.parse(this.responseText));
+    }
+  xhttp.open("POST", "api/getStudent.php");
+  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  xhttp.send("userid=109NS&token=437394baff5aa33daa618be47b75cb49&sem=4");
+}
+loadDoc();
+    </script>
+</head>
+<body>
+  <form action="" method="post"></form>
+    <p id="demo"></p>
+    <table>
+      <thead>
+       <th>
+        <tr><td>Subject</td><td>Teacher</td> <td>Sem</td></tr>
+        </th></thead>
+      <tbody>
+        <tr><td>Fundamentsla</td> <td>Nagraj</td> <td>1</td></tr>
+      </tbody>
+    </table>
+</body>
+</html>

@@ -5,6 +5,8 @@ body {
       sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    max-width: 100%;
+    overflow-y: scroll;
   }
   
   code {
@@ -41,10 +43,6 @@ text-align: center;
     color: white;
     background-color: inherit;
     margin-right: 50px;
-}
-body{
-    max-width: 100%;
-    overflow-y: hidden;
 }
 #menu{
     margin-left: 20px;
