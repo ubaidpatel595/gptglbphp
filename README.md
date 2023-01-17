@@ -3,6 +3,7 @@
 # How To Test the project
 
 # Pull Or Clone the project
+### Run npm -i to insall nodemodules to install node modules
 
 # Step 1:-
 There is a folder newphp folder in root directory
