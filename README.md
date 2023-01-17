@@ -11,7 +11,7 @@ Copy and paste this folder to Xampp/htdocs
 
 # Step 2:-
 create a database with name "newgpt" from xampp phpmyadmin
-There is a file newgpt.sql in the root folder
+There is a file "newgpt.sql" in the root folder
 import this file in the newgpt database 
 
 # Step 3:-
