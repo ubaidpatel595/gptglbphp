@@ -18,18 +18,18 @@ if($role == "STUDENT"){
     if($reg == 1){
         $sem = $_POST['sem'];
         $insertStudent = "INSERT INTO students values('$userid','$sem')";
-        $ins = $conn->query($sql);
+        $ins = $conn->query($insertStudent);
        // echo $ins;
     }
     echo "$reg";
     
-}
-//Creating User
-$sql = "INSERT INTO users (userid, fullname, mobile, email, user_password, user_role,branch) 
-VALUES('$userid','$name','$mobile','$email','$pasword','$role','$branch')";
-$reg = $conn->query($sql);
-echo "$reg";
 }else{
+    //Creating User
+    $sql = "INSERT INTO users (userid, fullname, mobile, email, user_password, user_role,branch) 
+    VALUES('$userid','$name','$mobile','$email','$pasword','$role','$branch')";
+    $reg = $conn->query($sql);
+    echo "$reg";
+}}else{
     echo "You Are Not Allowed To Visit This Page";
 }
 ?>

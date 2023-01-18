@@ -10,11 +10,12 @@
   const xhttp = new XMLHttpRequest();
   xhttp.onload = function() {
     document.getElementById("demo").innerHTML = this.responseText;
-    console.log(a=JSON.parse(this.responseText));
+    console.log(a=this.responseText);
+    localStorage.test=this.responseText;
     }
-  xhttp.open("POST", "api/getStudent.php");
+  xhttp.open("POST", "api/getAttendance.php");
   xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-  xhttp.send("userid=109NS&token=437394baff5aa33daa618be47b75cb49&sem=4");
+  xhttp.send("userid=109NS&token=437394baff5aa33daa618be47b75cb49&sem=5&subject=1&date=2023-01-18");
 }
 loadDoc();
     </script>

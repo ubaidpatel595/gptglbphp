@@ -4,6 +4,7 @@ import Upload from "../../Apis/Upload";
 import AssignSub from "../../Apis/AssignSub";
 import AssignedSub from "../../Apis/assignedSub";
 import MarkAttendance from "../../Apis/markAttendance";
+import ModifyAttendance from "../../Apis/modifyAttandance";
 
 function show(elem,hide){
     let opt = document.getElementById(elem);
@@ -19,16 +20,17 @@ const [type,setType]=useState("aa");
         <div id="actions">
         <div class="flex-hod" >
             <div id="act-btns">
-                <button onClick={()=>{show('action',['gen_reports','upload','upload_opts','assigned','markAttendance'])}}>Assign Subject</button><br/>
-                <button onClick={()=>{show('assigned',['gen_reports','upload','upload_opts','action','markAttendance'])}}>Assigned Subjects</button><br/>
-                <button onClick={()=>{show('markAttendance',['action','upload','upload_opts','assigned','gen_reports'])}}>Mark Attendance</button><br/>
-                <button onClick={()=>{show('gen_reports',['action','upload','upload_opts','assigned','markAttendance'])}}>Modify Attendance</button><br/>
-                <button onClick={()=>{show('gen_reports',['action','upload','upload_opts','assigned','markAttendance'])}}>Generate Reports</button><br/>
-                <button onClick={()=>{show('upload',['gen_reports','action','upload_opts','assigned','markAttendance'])}}>Upload</button><br/>
+                <button onClick={()=>{show('action',['ModifyAttendance','gen_reports','upload','upload_opts','assigned','markAttendance'])}}>Assign Subject</button><br/>
+                <button onClick={()=>{show('assigned',['ModifyAttendance','gen_reports','upload','upload_opts','action','markAttendance'])}}>Assigned Subjects</button><br/>
+                <button onClick={()=>{show('markAttendance',['ModifyAttendance','action','upload','upload_opts','assigned','gen_reports'])}}>Mark Attendance</button><br/>
+                <button onClick={()=>{show('ModifyAttendance',['action','upload','upload_opts','assigned','markAttendance'])}}>Modify Attendance</button><br/>
+                <button onClick={()=>{show('gen_reports',['ModifyAttendance','action','upload','upload_opts','assigned','markAttendance'])}}>Generate Reports</button><br/>
+                <button onClick={()=>{show('upload',['ModifyAttendance','gen_reports','action','upload_opts','assigned','markAttendance'])}}>Upload</button><br/>
             </div>
             <div id="action"><AssignSub/></div>
             <div id="assigned"><AssignedSub/></div>
             <div id="markAttendance"><MarkAttendance/></div>
+            <div id="ModifyAttendance"><ModifyAttendance/></div>
             
             <div id="gen_reports">
                 <button>Shortage Of Attendance</button><br/>

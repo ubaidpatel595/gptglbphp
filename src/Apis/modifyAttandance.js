@@ -3,15 +3,7 @@ import "../Home/Css/login.css";
 import {useForm} from "react-hook-form";
 import { useState } from "react";
 
-function getStudent(sem,listupdate,updtsubs){
-    let auth = JSON.parse(localStorage.Authorization);
-    let userid = auth.userid;
-    let token = auth.token;
-   // alert(userid)
-    let ajax  = new XMLHttpRequest();
-    ajax.open("POST","http://localhost/newphp/api/getStudent.php");
-    ajax.setRequestHeader("Content-Type","application/x-www-form-urlencoded")
-    ajax.onload=function (){
+function updateSublist(sem,updtsubs){
         let subjects = JSON.parse(localStorage.Authorization).subjects;
         let sublist = [];
         for (let x in subjects){
@@ -20,17 +12,34 @@ function getStudent(sem,listupdate,updtsubs){
             }
         }
         updtsubs(sublist);
-        
+}
 
-        listupdate(JSON.parse(this.responseText))
-        localStorage.studentList=this.responseText;
-        // alert("Loaded");
-        console.log(JSON.parse(this.responseText))
+//Getting Attendance
+function getAttendance(updtlist){
+    let auth = JSON.parse(localStorage.Authorization);
+    let userid = auth.userid;
+    let token = auth.token;
+    let sem = document.getElementById("selectsemester").value;
+    let attend_date = document.getElementById("selectdate").value;
+    let subject = document.getElementById("select_subject").value;
+ 
+    let ajax  = new XMLHttpRequest();
+    ajax.open("POST","http://localhost/newphp/api/getAttendance.php");
+    ajax.setRequestHeader("Content-Type","application/x-www-form-urlencoded")
+    ajax.onload=function (){
+       
+        
+        localStorage.Attendance=this.responseText;
+        //alert("Loaded");
+        console.log(this.responseText)
+     let a = JSON.parse(this.responseText);
+     updtlist(a)
     }
-    let params = `userid=${userid}&token=${token}&sem=${sem}`;
+    let params = `userid=${userid}&token=${token}&sem=${sem}&subject=${subject}&date=${attend_date}`;
     ajax.send(params);
 }
-  
+
+//Type Based Attendance Logic
 const updateType=(e)=>{
     let typ = e.target.value;
     if( typ === "allpresent" || typ ==="allabsent"){
@@ -42,6 +51,7 @@ const updateType=(e)=>{
     }
 
 }
+
 const finalizeattend=(list)=>{
     let subject = (document.getElementById("selectsubject").value);
     let teacher = (JSON.parse(localStorage.Authorization).userid);
@@ -120,7 +130,7 @@ const finalizeattend=(list)=>{
    // alert(query)  
 }
 
-function MarkAttendance(){
+function ModifyAttendance(){
     const [studentlist,updateList] = useState([{reg:"not loaded",name:"not loaded",sem:"0"}]);
     const [subjectlist,updatesubjects] = useState([{name:"No subjects found",code:"sdds",sem:"1"}]);  
      
@@ -133,10 +143,14 @@ function MarkAttendance(){
             <form >
                 <table>
                     <tr>
+                      <td>Sem:</td>
+                      <td><input id="selectdate" type="date"/></td>
+                    </tr>
+                    <tr>
                         <td>Sem:</td>
                         <td> 
-                            <select name="sem" id="selectsem" onChange={(e)=>{getStudent(e.target.value,updateList,updatesubjects)}}>
-                                <option value="1">Select Sem</option>
+                            <select name="sem" id="selectsemester" onChange={(e)=>{updateSublist(e.target.value,updatesubjects)}} >
+                                <option value="1w">Select Sem</option>
                                 <option value="1">1</option>
                                 <option value="2">2</option>
                                 <option value="3">3</option>
@@ -150,7 +164,7 @@ function MarkAttendance(){
                     <tr>
                         <td>Subject:</td>
                         <td> 
-                            <select name="subject" id="selectsubject">
+                            <select name="subject" id="select_subject" onChange={()=>{getAttendance(updateList)}}>
                                 <option value="1">Select Subject</option>
                                 {subjectlist.map((d)=>{
                                     return <option value={d.code}>{d.name}</option>
@@ -158,23 +172,10 @@ function MarkAttendance(){
                             </select>
                         </td>
                     </tr>
-
                     <tr>
-                        <td>Type:</td>
-                        <td> 
-                            <select name="type" id="attendancetype" onChange={updateType} >
-                                <option value="1">Select Type</option>
-                                <option value="allpresent">All Present</option>
-                                <option value="allabsent">All Absent</option>
-                                <option value="somepresent">Some Present</option>
-                                <option value="someabsent">Some Absent</option>
-                            </select>
-                        </td>
-                    </tr>
+                    <td colSpan={2} id="tickstudent" > Tick Students:</td></tr>
                     <tr>
-                    <td colSpan={2} id="tickstudent" style={{textAlign:"center",display:"none"}}> Tick Students:</td></tr>
-                    <tr>
-                        <td colSpan={2} id="studentlist" style={{display:"none"}}> 
+                        <td colSpan={2} id="studentlist" > 
                             <table className="studenttable">
                                 <tr>
                                     <td>Name</td>
@@ -187,7 +188,7 @@ function MarkAttendance(){
                                         <tr>
                                             <td>{data.name}</td>
                                             <td>{data.reg}</td>
-                                            <td><input type="checkbox" id={data.reg}/></td>
+                                            <td><input type="checkbox" id={data.reg} checked={(data.state == "PRESENT" ? true:false)}/></td>
                                         </tr>
                                     )
                                   })
@@ -202,4 +203,4 @@ function MarkAttendance(){
         </>
     )
 }
-export default MarkAttendance;
+export default ModifyAttendance;

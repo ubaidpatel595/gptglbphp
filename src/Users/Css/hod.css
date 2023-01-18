@@ -55,7 +55,7 @@ text-align: center;
 #upload,#gen_reports,#delete{
     display: none;
 }
-#action,#upload_opts,#assigned,#markAttendance{
+#action,#upload_opts,#assigned,#markAttendance,#ModifyAttendance{
     margin-top: 10px;
     min-width: 50vw;
     display: none;

@@ -106,7 +106,7 @@ function Register(){
                     <tr id="semselect">
                         <td >Sem:</td>
                         <td  style={{textAlign:"center"}}> 
-                            <select name="sem" {...register("sem")}>
+                            <select {...register("sem")} name="sem" >
                                 <option value="1">Select Sem</option>
                                 <option value="1">1</option>
                                 <option value="2">2</option>
