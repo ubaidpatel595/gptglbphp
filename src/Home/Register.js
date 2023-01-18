@@ -7,8 +7,11 @@ function change_usertype(typ){
     let elem = document.getElementById("user_id");
     type=typ;
     if(typ=="STUDENT"){
+        document.getElementById("semselect").style="display:";
         elem.innerHTML="Reg No:"
+
     }else{
+        document.getElementById("semselect").style="display:none";
         elem.innerHTML="Emp Id:"
     }
 }
@@ -95,6 +98,20 @@ function Register(){
                                 <option value="EC">EC</option>
                                 <option value="EE">EE</option>
                                 <option value="CIVIL">CIVIL</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr id="semselect">
+                        <td >Sem:</td>
+                        <td  style={{textAlign:"center"}}> 
+                            <select name="sem">
+                                <option value="1">Select Sem</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
                             </select>
                         </td>
                     </tr>

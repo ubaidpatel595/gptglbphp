@@ -123,3 +123,14 @@ text-align: center;
             border: none;
             min-width: 80px;
             height: 30px;}
+.studenttable{
+    border: 1px solid;
+    border-collapse: collapse;
+    border-radius: 2px;
+}
+ 
+.studenttable td{
+    border: 1px solid;
+    border-collapse: collapse;
+    padding: 5px;
+}

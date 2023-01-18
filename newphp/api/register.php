@@ -11,7 +11,18 @@ $userid = $_POST['userid'];
  $role = $_POST['role'];
  $pasword = $_POST['password'];
  $branch = $_POST['branch'];
-
+if($role == "STUDENT"){
+    $sql = "INSERT INTO users (userid, fullname, mobile, email, user_password, user_role,branch) 
+        VALUES('$userid','$name','$mobile','$email','$pasword','$role','$branch')";
+        $reg = $conn->query($sql);
+    if($reg == 1){
+        $sem = $_POST['sem'];
+        $insertStudent = "INSERT INTO students values('$userid','$sem')";
+        $ins = $conn->query($sql);
+    }
+    echo "$reg";
+    
+}
 //Creating User
 $sql = "INSERT INTO users (userid, fullname, mobile, email, user_password, user_role,branch) 
 VALUES('$userid','$name','$mobile','$email','$pasword','$role','$branch')";

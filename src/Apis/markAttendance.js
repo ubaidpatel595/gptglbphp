@@ -1,7 +1,9 @@
 import "./assign.css";
 import "../Home/Css/login.css";
 import {useForm} from "react-hook-form";
-function getStudent(sem){
+import { useState } from "react";
+
+function getStudent(sem,listupdate){
     let auth = JSON.parse(localStorage.Authorization);
     let userid = auth.userid;
     let token = auth.token;
@@ -10,38 +12,60 @@ function getStudent(sem){
     ajax.open("POST","http://localhost/newphp/api/getStudent.php");
     ajax.setRequestHeader("Content-Type","application/x-www-form-urlencoded")
     ajax.onload=function (){
-        alert("Loaded");
-        console.log(this.responseText)
+        listupdate(JSON.parse(this.responseText))
+        localStorage.studentList=this.responseText;
+        // alert("Loaded");
+        console.log(JSON.parse(this.responseText))
     }
     let params = `userid=${userid}&token=${token}&sem=${sem}`;
     ajax.send(params);
 }
   
+const updateType=(e)=>{
+    let typ = e.target.value;
+    if( typ === "allpresent" || typ ==="allabsent"){
+        document.getElementById("tickstudent").style="display:none"
+        document.getElementById("studentlist").style="display:none"
+    }else{
+      document.getElementById("tickstudent").style="display:;text-align:center"
+      document.getElementById("studentlist").style="display:;" 
+    }
+
+}
+const finalizeattend=(list)=>{
+    let type = document.getElementById("attendancetype").value;
+    if(type === "somepresent"){
+        let query = "INSERT INTO attendance (subject,teacher,student,state) values";
+        for (let x in list){
+            alert(document.getElementById(list[x].reg).checked)
+            let hq = `('$','109NS','109CS20058','PRESENT')`
+            // alert(document.getElementById("attendancetype").value)
+        } 
+
+        //alert(" Some Present")
+    }else if(type === "someabsent"){
+       // alert(" Some Absent")
+    }else if(type === "allpresent"){
+       // alert(" All Present")
+    }else{
+        //alert("All Absent")
+    }   
+}
+
 function AssignSub(){
-   getStudent("5")
+    const [studentlist,updateList] = useState([{reg:"not loaded",name:"not loaded",sem:"0"}])  
+     
     return(
         <>
-        <h1>Hello World</h1>
+        {/* <h1>Hello World</h1> */}
         <div id="login-form">
             <h4 id="result"></h4>
             <form >
                 <table>
-                <tr>
-                        <td>Type:</td>
-                        <td> 
-                            <select name="sem" >
-                                <option value="1">Select Type</option>
-                                <option value="allp">All Present</option>
-                                <option value="alla">All Absent</option>
-                                <option value="present">Some Present</option>
-                                <option value="absent">Some Absent</option>
-                            </select>
-                        </td>
-                    </tr>
                     <tr>
                         <td>Sem:</td>
                         <td> 
-                            <select name="sem" >
+                            <select name="sem" onChange={(e)=>{getStudent(e.target.value,updateList)}}>
                                 <option value="1">Select Sem</option>
                                 <option value="1">1</option>
                                 <option value="2">2</option>
@@ -52,16 +76,45 @@ function AssignSub(){
                             </select>
                         </td>
                     </tr>
+
                     <tr>
-                    <td > Tick Students:</td>
+                        <td>Type:</td>
                         <td> 
-                        <select id="subjects"  name="subject" style={{textAlign:"left"}}>
-                            <option>Select Subject</option>
-                        </select>
+                            <select name="type" id="attendancetype" onChange={updateType} >
+                                <option value="1">Select Type</option>
+                                <option value="allpresent">All Present</option>
+                                <option value="allabsent">All Absent</option>
+                                <option value="somepresent">Some Present</option>
+                                <option value="someabsent">Some Absent</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                    <td colSpan={2} id="tickstudent" style={{textAlign:"center",display:"none"}}> Tick Students:</td></tr>
+                    <tr>
+                        <td colSpan={2} id="studentlist" style={{display:"none"}}> 
+                            <table className="studenttable">
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Reg no</td>
+                                    <td>Attendance</td>
+                                </tr>
+                                {
+                                  studentlist.map((data)=>{
+                                    return(
+                                        <tr>
+                                            <td>{data.name}</td>
+                                            <td>{data.reg}</td>
+                                            <td><input type="checkbox" id={data.reg}/></td>
+                                        </tr>
+                                    )
+                                  })
+                                }
+                            </table>
                         </td>
                     </tr>
                 </table>
-                <button type="submit" name="login" id="submit-button">Assign</button>
+                <button type="button" name="login" id="submit-button" onClick={()=>{finalizeattend(studentlist)}}>Assign</button>
             </form>
         </div>
         </>
