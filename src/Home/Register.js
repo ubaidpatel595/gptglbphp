@@ -31,6 +31,7 @@ function signup(data,nav,auth){
     ajax.onload=()=>{
         let response = ajax.responseText;
         let elem = document.getElementById("result");
+        console.log(response)
         if(response == "1"){
             elem.innerHTML = "Success";
             elem.style="margin:0px";

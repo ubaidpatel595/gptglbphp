@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 17, 2023 at 02:45 PM
+-- Generation Time: Jan 18, 2023 at 07:24 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -31,6 +31,7 @@ CREATE TABLE `attendance` (
   `subject` varchar(20) NOT NULL,
   `teacher` varchar(20) NOT NULL,
   `student` varchar(20) NOT NULL,
+  `state` varchar(20) NOT NULL,
   `date` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -38,9 +39,11 @@ CREATE TABLE `attendance` (
 -- Dumping data for table `attendance`
 --
 
-INSERT INTO `attendance` (`subject`, `teacher`, `student`, `date`) VALUES
-('20CS21M', '109NS', '109CS20058', '0000-00-00 00:00:00'),
-('20CS11T', '109NS', '109CS20058', '2022-12-10 11:18:00');
+INSERT INTO `attendance` (`subject`, `teacher`, `student`, `state`, `date`) VALUES
+('20CS21M', '109NS', '109CS20058', '', '0000-00-00 00:00:00'),
+('20CS11T', '109NS', '109CS20058', '', '2022-12-10 11:18:00'),
+('20CS21M', '109NS', '109CS20058', 'PRESENT', '0000-00-00 00:00:00'),
+('20CS21M', '109NS', '109CS20058', 'PRESENT', '2023-01-17 16:44:54');
 
 -- --------------------------------------------------------
 
@@ -81,7 +84,9 @@ CREATE TABLE `students` (
 
 INSERT INTO `students` (`regno`, `sem`) VALUES
 ('109CS20058', '5'),
-('109CS20060', '4');
+('109CS20060', '4'),
+('KN4259tttt', '5'),
+('KN4259jssssdsdfssdf', '5');
 
 -- --------------------------------------------------------
 
@@ -105,6 +110,7 @@ INSERT INTO `subjectalloted` (`sub`, `teacher`, `sem`, `branch`) VALUES
 ('20CS112T', '109CS20060', '1', 'CS'),
 ('20CS11T', '109CS20058', '1', 'CS'),
 ('20CS11T', '109CS20060', '1', 'CS'),
+('20CS21M', '109CS20058', '2', 'CS'),
 ('20CS21M', '109CS20060', '2', 'CS');
 
 -- --------------------------------------------------------
@@ -149,17 +155,23 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`userid`, `fullname`, `mobile`, `email`, `user_password`, `user_role`, `branch`) VALUES
+('109agfgag', 'asdfgh', 'mobile', 'emsa', 'aaaaaa', 'aaa', 'CS'),
+('109CS1011', 'Ubaid Patel', '09148749147', 'fakeuser595@gmail.com', 'admin', 'STUDENT', 'CS'),
+('109CS10111', 'Ubaid Patel', '09148749147', 'fakeuser595@gmail.com', 'admin', 'STUDENT', 'CS'),
+('109CS1011111', 'Ubaid Patel', '09148749147', 'fakeuser595@gmail.com', 'admin', 'STUDENT', 'CS'),
+('109CS1011222', 'Ubaid Patel', '09148749147', 'fakeuser595@gmail.com', 'admin', 'undefined', 'CS'),
 ('109CS20058', 'UBAID PATEL', '9148749147', 'FAKEUSER595@GMAIL.COM', 'qwerty123@', 'faculty', 'CS'),
 ('109CS20060', 'AYUB ALI', '9148749147', 'AYUBALI123@GMAIL.COM', 'qwerty123@', 'FACULTY', 'CS'),
 ('109NS', 'NAGRAJ SIR', '9184567891', 'AGDADAJDAHGY@HGSS.CHD', 'qwerty123@', 'HOD', 'CS'),
-('B', 'BJB', '', '', '', '', ''),
 ('JBJ', 'BJB', 'JB', 'J', 'BJ', 'BJ', 'BJ'),
 ('KN4259', 'Ubaid Patel', '09148749147', 'fakeuser595@gmail.com', 'ubaid123@', 'STUDENT', 'CS'),
 ('KN4259jssss', 'UBAID', '7204479261', 'akbarpatelkua@gmail.com', 'ubaid123@', 'faculty', 'CS'),
 ('KN4259jssssdsdfssdf', 'V A MOHAMMED AYUB', '7204479261', 'ayubali200412@gmail.com', 'admin', 'STUDENT', 'ME'),
 ('KN4259jsssss', 'V A MOHAMMED AYUB', '7204479261', 'ayubali200412@gmail.com', 'ubaid123@', 'STUDENT', 'ME'),
 ('KN4259tttt', 'UBAID', '7204479261', 'akbarpatelkua@gmail.com', 'ubaid123@', 'STUDENT', 'CS'),
-('KNdssfdfd', 'V A MOHAMMED AYUB', '7204479261', 'ayubali200412@gmail.com', 'ubaid123@', 'STUDENT', 'CS');
+('KNdssfdfd', 'V A MOHAMMED AYUB', '7204479261', 'ayubali200412@gmail.com', 'ubaid123@', 'STUDENT', 'CS'),
+('user3', 'aghdsghjg', 'aas', 'sasa', 'ssa', 'sasa', 'CS'),
+('user4', 'aghdsghjg', 'aas', 'sasa', 'ssa', 'sasa', 'CS');
 
 --
 -- Indexes for dumped tables
@@ -220,13 +232,6 @@ ALTER TABLE `attendance`
 --
 ALTER TABLE `students`
   ADD CONSTRAINT `students_ibfk_1` FOREIGN KEY (`regno`) REFERENCES `users` (`userid`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `subjectalloted`
---
-ALTER TABLE `subjectalloted`
-  ADD CONSTRAINT `subjectalloted_ibfk_1` FOREIGN KEY (`teacher`) REFERENCES `users` (`userid`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `subjectalloted_ibfk_2` FOREIGN KEY (`sub`) REFERENCES `subjects` (`code`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
