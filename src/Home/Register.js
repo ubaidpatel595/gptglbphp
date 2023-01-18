@@ -24,9 +24,10 @@ function signup(data,nav,auth){
     let email = data.email
     let password = data.password
     let fullname = data.fullname
+    let sem = data.sem
 
     //Sending Parameters in UrlEncoded From
-    let params = `userid=${user_name}&name=${fullname}&mobile=${mobile}&email=${email}&password=${password}&role=${type}&branch=${data.branch}`;
+    let params = `userid=${user_name}&name=${fullname}&mobile=${mobile}&email=${email}&password=${password}&role=${type}&branch=${data.branch}&sem=${sem}`;
     let ajax = new XMLHttpRequest();
     ajax.onload=()=>{
         let response = ajax.responseText;
@@ -105,7 +106,7 @@ function Register(){
                     <tr id="semselect">
                         <td >Sem:</td>
                         <td  style={{textAlign:"center"}}> 
-                            <select name="sem">
+                            <select name="sem" {...register("sem")}>
                                 <option value="1">Select Sem</option>
                                 <option value="1">1</option>
                                 <option value="2">2</option>

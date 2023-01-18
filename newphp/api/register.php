@@ -19,6 +19,7 @@ if($role == "STUDENT"){
         $sem = $_POST['sem'];
         $insertStudent = "INSERT INTO students values('$userid','$sem')";
         $ins = $conn->query($sql);
+       // echo $ins;
     }
     echo "$reg";
     
