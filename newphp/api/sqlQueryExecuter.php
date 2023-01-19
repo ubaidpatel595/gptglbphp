@@ -1,5 +1,5 @@
 <?php header('Access-Control-Allow-Origin: *'); ?>
-<?php  //This Api needs userid,token,query,querytype ?>
+<?php  //This Api needs userid,token,query it executes create,update,delete querys  ?>
 <?php
 header("Content-Type: text/plain");
 
@@ -18,31 +18,14 @@ if($_POST){
     //Logic
     $queryType = $_POST['queryType'];
     $getquery = $_POST['query'];
-
-    if($queryType == "read"){
-        $res = $conn->query($getquery);
-        
-        if ($res->num_rows>0){
-        while($row = $res->fetch_assoc()) {
-            $str =$str.'{"reg":"'.$row['userid'].'","name":"'.$row['fullname'].'","sem":"'.$row['sem'].'"},';
-          }
-        $str = substr($str,0,-1);
-        $str =$str."]";
-        //$result = mysqli_fetch_assoc($res);
-        echo   $str;
-        }else{
-            echo '[{"reg":"no reg","name":"No Students Found","sem":"0"}]';
-        }        
+    //echo $getquery;
+    $res = $conn->query($getquery);
+    echo $res;        
     }else{
-        $res = $conn->query($getquery);
-        echo $res;
-    }
-        
-    }else{
-        echo "Failed";
+       echo "Failed";
     }
     }else{
         $token = '[{"auth":"False"}]';
-        echo $token;
+       echo $token;
     }    
 ?>

@@ -1,6 +1,8 @@
 import "../Users/Css/assignedsub.css"
 
+//Get Details Of Assigned Subjects
 function getAssigned(){
+  //  alert("a")
   const xhttp = new XMLHttpRequest();
   let Auth = JSON.parse(localStorage.Authorization);
   let params = `userid=${Auth.userid}&token=${Auth.token}`;
@@ -12,6 +14,8 @@ function getAssigned(){
   xhttp.send(params);
 
 }
+
+//Save Assigned Subjects PDf
 function printInfo() {
    let style = `div{width: 100%;background-color: rgba(119, 164, 185, 0.776);margin-top: 30px;
                 border-radius: 20px;text-align: center;padding-top:30px;padding-bottom:30px;}
@@ -36,18 +40,29 @@ function printInfo() {
     openWindow.print();
     openWindow.close();
 }
+
+
 function AssignedSub(){
-    let sublist = JSON.parse(localStorage.assignedSubs);
-    getAssigned()
+    let sublist;
+    if(localStorage.assignedSubs){
+    sublist = JSON.parse(localStorage.assignedSubs)  
+    //sublist = [{sub:"notLoaded",teacher:"notLoaded",sem:"0"}]
+    }else{
+        sublist = [{sub:"notLoaded",teacher:"notLoaded",sem:"0"}]
+    }
+
     return(
         <>
+        <div style={{display:"none"}}>{getAssigned()}</div>
         <div className="assignedsub" id="a">
         <h1>Assigned Subjects</h1>
         <table>
+            <tbody>
             <tr><th>Subject</th><th>Teacher</th><th>Sem</th></tr>
             {sublist.map(
-                (data)=><tr><td>{data.sub}</td><td>{data.teacher}</td><td>{data.sem}</td></tr>
+                (data)=><tr key={data.sub+data.teacher}><td>{data.sub}</td><td>{data.teacher}</td><td>{data.sem}</td></tr>
             )}
+            </tbody>
         </table>
         </div>
         <button id="submit-button" onClick={()=>{printInfo()}}>Save</button>

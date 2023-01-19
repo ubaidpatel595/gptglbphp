@@ -1,0 +1,34 @@
+What Are the Details Are Saved to localStrorage
+
+Api Endpoints And Return DataType With UseLocation And purpose
+
+1:
+return value : 1 OR 0
+loaction : register.js/signup()
+purpose : it creates user and returns 1 if created else returns 0
+
+2:
+return value : A JS Object  '{"userid":"userid","name":"name","type":"role","token":"password","auth":"True","branch":"branch",
+		"subjects":[{"name":"subject name","code":"subject code","sem":"0"}]'}'
+loaction : register.js/authenticate() AND login.js/authenticate()
+purpose : it is used to get user informtion and it contains token
+
+3:
+return value : A JS Array of objects'[{"sub":"norecords","teacher":"norecords","sem":"0"}]'
+location: assignedsub.js/getAssigned()
+purpose : To Display Assigned Subjects Data
+
+4:
+return value : A JS Array of objects '[{"userid":"empid","name":"fullname"}]'
+location : assignsub.js/getFaculty()
+purpose : A Faculty list used to assign subjects
+
+5:
+return value : A JS Array of objects '[{"code":"subjectcode","name":"Subject name"}]'
+location : assignsub.js/getSubject()
+purpose : A Subject list used to assign subjects
+
+6:
+return value: A JS Array of objects '[{"reg":"no reg","name":"No Students Found","sem":"0"}]'
+location: markattendance.js/getStudent()
+purpose: A Student LIst to mark Attendance

@@ -132,17 +132,18 @@ function MarkAttendance(){
             <h4 id="result"></h4>
             <form >
                 <table>
+                    <tbody>
                     <tr>
                         <td>Sem:</td>
                         <td> 
                             <select name="sem" id="selectsem" onChange={(e)=>{getStudent(e.target.value,updateList,updatesubjects)}}>
-                                <option value="1">Select Sem</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
-                                <option value="6">6</option>
+                                <option key="val" value="1">Select Sem</option>
+                                <option key="1" value="1">1</option>
+                                <option key="2" value="2">2</option>
+                                <option key="3" value="3">3</option>
+                                <option key="4" value="4">4</option>
+                                <option key="5" value="5">5</option>
+                                <option key="6" value="6">6</option>
                             </select>
                         </td>
                     </tr>
@@ -153,7 +154,7 @@ function MarkAttendance(){
                             <select name="subject" id="selectsubject">
                                 <option value="1">Select Subject</option>
                                 {subjectlist.map((d)=>{
-                                    return <option value={d.code}>{d.name}</option>
+                                    return <option key={d.code} value={d.code}>{d.name}</option>
                                 })}
                             </select>
                         </td>
@@ -163,11 +164,11 @@ function MarkAttendance(){
                         <td>Type:</td>
                         <td> 
                             <select name="type" id="attendancetype" onChange={updateType} >
-                                <option value="1">Select Type</option>
-                                <option value="allpresent">All Present</option>
-                                <option value="allabsent">All Absent</option>
-                                <option value="somepresent">Some Present</option>
-                                <option value="someabsent">Some Absent</option>
+                                <option key="0"value="1">Select Type</option>
+                                <option key="1"value="allpresent">All Present</option>
+                                <option key="2"value="allabsent">All Absent</option>
+                                <option key="3"value="somepresent">Some Present</option>
+                                <option key="4"value="someabsent">Some Absent</option>
                             </select>
                         </td>
                     </tr>
@@ -176,6 +177,7 @@ function MarkAttendance(){
                     <tr>
                         <td colSpan={2} id="studentlist" style={{display:"none"}}> 
                             <table className="studenttable">
+                                <tbody>
                                 <tr>
                                     <td>Name</td>
                                     <td>Reg no</td>
@@ -184,7 +186,7 @@ function MarkAttendance(){
                                 {
                                   studentlist.map((data)=>{
                                     return(
-                                        <tr>
+                                        <tr key={data.reg}>
                                             <td>{data.name}</td>
                                             <td>{data.reg}</td>
                                             <td><input type="checkbox" id={data.reg}/></td>
@@ -192,11 +194,13 @@ function MarkAttendance(){
                                     )
                                   })
                                 }
+                                </tbody>
                             </table>
                         </td>
                     </tr>
+                    </tbody>
                 </table>
-                <button type="button" name="login" id="submit-button" onClick={()=>{finalizeattend(studentlist)}}>Assign</button>
+                <button type="button" name="login" id="submit-button" onClick={()=>{finalizeattend(studentlist)}}>Save Attendance</button>
             </form>
         </div>
         </>

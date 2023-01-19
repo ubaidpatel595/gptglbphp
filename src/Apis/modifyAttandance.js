@@ -56,56 +56,51 @@ const finalizeattend=(list)=>{
     let subject = (document.getElementById("selectsubject").value);
     let teacher = (JSON.parse(localStorage.Authorization).userid);
 
+    //Logic variables
+    let absecount = 0;
+    let prescount = 0;
+    let query;
+
     //Api Requirements
     let token = (JSON.parse(localStorage.Authorization).token);
     let sem = document.getElementById("selectsem").value;
+    let selecdate = document.getElementById("selectdate").value;
 
     let type = document.getElementById("attendancetype").value;
 
     //Creating Query
-    let query = "INSERT INTO attendance (subject,teacher,student,state) VALUES ";
+    let presentquery = "UPDATE attendance SET state ='PRESENT' WHERE ";
+    let absentquery = "UPDATE attendance SET state ='ABSENT' WHERE ";
 
-    //Adding Query values Based on input
-    if(type === "somepresent"){
-        for (let x in list){
-            let attended = (document.getElementById(list[x].reg).checked);
-            let state;
-            if(attended){
-                state = "PRESENT";
-            }else{
-                state = "ABSENT";
-            }            
-            query = query+`('${subject}','${teacher}','${list[x].reg}','${state}'),`;
+    for (let x in list){
+        let attended = (document.getElementById(list[x].reg).checked);        
+        if(attended){
+            //state = "PRESENT";
+            prescount +=1; 
+            let qp = `student='${list[x].reg}' AND date='${selecdate}' OR `
+            presentquery = presentquery+qp;
+        }else{
+            absecount +=1;
+            let qp = `student='${list[x].reg}' OR `
+            absentquery = absentquery+qp;
+            //state = "ABSENT";
+        }           
         } 
-    }else if(type === "someabsent"){
+   
 
-        for (let x in list){
-            let attended = (document.getElementById(list[x].reg).checked);
-            let state;
-            if(attended){
-                state = "ABSENT";
-            }else{
-                state = "PRESENT";
-            }            
-            query = query+`('${subject}','${teacher}','${list[x].reg}','${state}'),`;
-        } 
-       // alert(" Some Absent")
-    }else if(type === "allpresent"){
-        for (let x in list){
-            let attended = (document.getElementById(list[x].reg).checked);            
-            query = query+`('${subject}','${teacher}','${list[x].reg}','PRESENT'),`;
-        } 
-       // alert(" All Present")
+    //Removing Extra OR from query
+    presentquery = presentquery.slice(0,presentquery.length-4)
+    absentquery = absentquery.slice(0,absentquery.length-4)
+
+    //Submitting Query based on logic
+    //alert(absecount)
+    if(absecount === 0){
+        query = presentquery;
+    }else if(prescount === 0){
+        query = absentquery
     }else{
-        for (let x in list){
-            let attended = (document.getElementById(list[x].reg).checked);            
-            query = query+`('${subject}','${teacher}','${list[x].reg}','ABSENT'),`;
-        } 
-        //alert("All Absent")
-    } 
-
-    //Removing Extra , from query
-    query = query.slice(0,query.length-1)
+        query = presentquery+';'+absentquery;
+    }
 
     //Sending Attendance To Db
 
@@ -114,24 +109,24 @@ const finalizeattend=(list)=>{
     ajax.setRequestHeader("Content-Type","application/x-www-form-urlencoded")
     ajax.onload=function (){
         console.log(this.responseText)
-        let submitstatus = document.getElementById("submitstatus");
+        let modstatus = document.getElementById("modifyresult");
         if(this.responseText == "1"){
-            submitstatus.innerHTML = "Attendance Submitted";
-            submitstatus.style="color:green";
+            modstatus.innerHTML = "Attendance Updated";
+            modstatus.style="color:green";
         }else{
-            submitstatus.innerHTML = "Attendance Already Submitted";
-            submitstatus.style="color:red";
+            modstatus.innerHTML = "Something went wrong";
+            modstatus.style="color:red";
         }
         //alert("Updated")
     }
-    let params = `userid=${teacher}&token=${token}&sem=${sem}&queryType=CREATE&query=${query}`;
+    let params = `userid=${teacher}&token=${token}&sem=${sem}&queryType=UPDATE&query=${query}`;
     ajax.send(params);
     
    // alert(query)  
 }
 
 function ModifyAttendance(){
-    const [studentlist,updateList] = useState([{reg:"not loaded",name:"not loaded",sem:"0"}]);
+    const [studentlist,updateList] = useState([{reg:"notloaded",name:"not loaded",sem:"0"}]);
     const [subjectlist,updatesubjects] = useState([{name:"No subjects found",code:"sdds",sem:"1"}]);  
      
     return(
@@ -139,9 +134,10 @@ function ModifyAttendance(){
         {/* <h1>Hello World</h1> */}
         <div id="login-form">
             <h4 id="submitstatus" style={{display:"none"}}></h4>
-            <h4 id="result"></h4>
+            <h4 id="modifyresult"></h4>
             <form >
                 <table>
+                    <tbody>
                     <tr>
                       <td>Sem:</td>
                       <td><input id="selectdate" type="date"/></td>
@@ -167,7 +163,7 @@ function ModifyAttendance(){
                             <select name="subject" id="select_subject" onChange={()=>{getAttendance(updateList)}}>
                                 <option value="1">Select Subject</option>
                                 {subjectlist.map((d)=>{
-                                    return <option value={d.code}>{d.name}</option>
+                                    return <option key={d.code} value={d.code}>{d.name}</option>
                                 })}
                             </select>
                         </td>
@@ -177,6 +173,7 @@ function ModifyAttendance(){
                     <tr>
                         <td colSpan={2} id="studentlist" > 
                             <table className="studenttable">
+                            <tbody>
                                 <tr>
                                     <td>Name</td>
                                     <td>Reg no</td>
@@ -185,19 +182,21 @@ function ModifyAttendance(){
                                 {
                                   studentlist.map((data)=>{
                                     return(
-                                        <tr>
+                                        <tr key={data.reg}>
                                             <td>{data.name}</td>
                                             <td>{data.reg}</td>
-                                            <td><input type="checkbox" id={data.reg} checked={(data.state == "PRESENT" ? true:false)}/></td>
+                                            <td><input type="checkbox" id={data.reg} defaultChecked={(data.state == "PRESENT" ? true:false)}/></td>
                                         </tr>
                                     )
                                   })
                                 }
+                                </tbody>
                             </table>
                         </td>
                     </tr>
+                    </tbody>
                 </table>
-                <button type="button" name="login" id="submit-button" onClick={()=>{finalizeattend(studentlist)}}>Assign</button>
+                <button type="button" name="login" id="submit-button" onClick={()=>{finalizeattend(studentlist)}}>Save Attendance</button>
             </form>
         </div>
         </>

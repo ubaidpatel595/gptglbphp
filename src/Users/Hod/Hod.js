@@ -14,11 +14,13 @@ function show(elem,hide){
         opt.style="display:none";
     }
 }
+
+
 function Hod(){
 const [type,setType]=useState("aa");
     return(
         <div id="actions">
-        <div class="flex-hod" >
+        <div className="flex-hod" >
             <div id="act-btns">
                 <button onClick={()=>{show('action',['ModifyAttendance','gen_reports','upload','upload_opts','assigned','markAttendance'])}}>Assign Subject</button><br/>
                 <button onClick={()=>{show('assigned',['ModifyAttendance','gen_reports','upload','upload_opts','action','markAttendance'])}}>Assigned Subjects</button><br/>

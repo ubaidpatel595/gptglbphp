@@ -30,25 +30,27 @@ function getSubject(sem,listopts){
 }
 
 function listSubs(){
-    let sublist = JSON.parse(localStorage.subjectList);
-    let selec = document.getElementById("subjects");
-    selec.innerHTML="";
-    let option = document.createElement("option");
-    option.text="Select Subject";
-    selec.add(option);
-    
-    if(sublist.length){
-        for(let x in sublist){
+    if(localStorage.subjectList){
+        let sublist = JSON.parse(localStorage.subjectList);
+        let selec = document.getElementById("subjects");
+        selec.innerHTML="";
+        let option = document.createElement("option");
+        option.text="Select Subject";
+        selec.add(option);
+        
+        if(sublist.length){
+            for(let x in sublist){
+                let option = document.createElement("option");
+                option.text=sublist[x]['name'];
+                option.value=sublist[x]['code'];
+                selec.add(option);
+            }
+        }else{
             let option = document.createElement("option");
-            option.text=sublist[x]['name'];
-            option.value=sublist[x]['code'];
+            option.text="No Subjects";
+            option.value="0";
             selec.add(option);
         }
-    }else{
-        let option = document.createElement("option");
-        option.text="No Subjects";
-        option.value="0";
-        selec.add(option);
     }
 }
 
@@ -79,7 +81,12 @@ function Assign(data) {
 
 function AssignSub(){
     getFaculty();
-    var Facultylist =(JSON.parse(localStorage.getItem("facultyList")));
+    var Facultylist;
+    if(localStorage.facultyList){
+        Facultylist =(JSON.parse(localStorage.getItem("facultyList")));
+    }else{
+        Facultylist =[{userid:"noLoaded",name:"notLoaded"}];
+    }
     const {register,handleSubmit} = useForm();
 
     return(
@@ -88,30 +95,29 @@ function AssignSub(){
             <h4 id="result"></h4>
             <form onSubmit={handleSubmit((data)=>{Assign(data)})} >
                 <table>
+                    <tbody>
                     <tr>
                         <td>Staff:</td>
                         <td>
-                        <td> 
                             <select name="teacher" id="staff" {...register("teacher")}>
                                 {
                                Facultylist.map(faculty => 
-                               <option value={faculty['userid']} > {faculty['name']} </option>)
+                               <option key={faculty['userid']} value={faculty['userid']} > {faculty['name']} </option>)
                                 }        
                             </select>
-                        </td>
                         </td>
                     </tr>
                     <tr>
                         <td>Sem:</td>
                         <td> 
                             <select name="sem" {...register("sem")} onChange={(e)=>{getSubject(e.target.value,listSubs);}} >
-                                <option value="1">Select Sem</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
-                                <option value="6">6</option>
+                                <option key="val" value="1">Select Sem</option>
+                                <option key="1" value="1">1</option>
+                                <option key="2" value="2">2</option>
+                                <option key="3" value="3">3</option>
+                                <option key="4" value="4">4</option>
+                                <option key="5" value="5">5</option>
+                                <option key="6" value="6">6</option>
                             </select>
                         </td>
                     </tr>
@@ -123,6 +129,7 @@ function AssignSub(){
                         </select>
                         </td>
                     </tr>
+                    </tbody>
                 </table>
                 <button type="submit" name="login" id="submit-button">Assign</button>
             </form>

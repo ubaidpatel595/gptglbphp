@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 18, 2023 at 07:24 AM
+-- Generation Time: Jan 19, 2023 at 07:03 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -32,18 +32,8 @@ CREATE TABLE `attendance` (
   `teacher` varchar(20) NOT NULL,
   `student` varchar(20) NOT NULL,
   `state` varchar(20) NOT NULL,
-  `date` timestamp NOT NULL DEFAULT current_timestamp()
+  `date` date NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `attendance`
---
-
-INSERT INTO `attendance` (`subject`, `teacher`, `student`, `state`, `date`) VALUES
-('20CS21M', '109NS', '109CS20058', '', '0000-00-00 00:00:00'),
-('20CS11T', '109NS', '109CS20058', '', '2022-12-10 11:18:00'),
-('20CS21M', '109NS', '109CS20058', 'PRESENT', '0000-00-00 00:00:00'),
-('20CS21M', '109NS', '109CS20058', 'PRESENT', '2023-01-17 16:44:54');
 
 -- --------------------------------------------------------
 
@@ -83,10 +73,11 @@ CREATE TABLE `students` (
 --
 
 INSERT INTO `students` (`regno`, `sem`) VALUES
-('109CS20058', '5'),
-('109CS20060', '4'),
-('KN4259tttt', '5'),
-('KN4259jssssdsdfssdf', '5');
+('109CS20001', '1'),
+('109CS20002', '1'),
+('109CS20003', '1'),
+('109CS20004', '1'),
+('109CS20005', '1');
 
 -- --------------------------------------------------------
 
@@ -106,12 +97,9 @@ CREATE TABLE `subjectalloted` (
 --
 
 INSERT INTO `subjectalloted` (`sub`, `teacher`, `sem`, `branch`) VALUES
-('20CS112T', '109CS20058', '1', 'CS'),
-('20CS112T', '109CS20060', '1', 'CS'),
-('20CS11T', '109CS20058', '1', 'CS'),
-('20CS11T', '109CS20060', '1', 'CS'),
-('20CS21M', '109CS20058', '2', 'CS'),
-('20CS21M', '109CS20060', '2', 'CS');
+('20AU01T', '109CSAM', '1', 'CS'),
+('20CS01P', '109CSSWM', '1', 'CS'),
+('20CS11T', '109CSNS', '1', 'CS');
 
 -- --------------------------------------------------------
 
@@ -130,9 +118,36 @@ CREATE TABLE `subjects` (
 --
 
 INSERT INTO `subjects` (`name`, `code`, `sem`) VALUES
-('UBAID PATEL', '20CS112T', '1'),
-('FUNDAMENTALS OF COMPUTER', '20CS11T', '1'),
-('ENGENEERING MATHEMATICS', '20CS21M', '2');
+('Environment Sustainibility OR Sports', '20AU01T', '1'),
+('Engineering Mathematics', '20C01T', '1'),
+('IT Skills', '20CS01P', '1'),
+('Fundamentals of Computers', '20CS11T', '1'),
+('Multimedia And Animation', '20CS21P', '2'),
+('Python Programming', '20CS31P', '3'),
+('Computer Hardware Maintenance and Administration', '20CS32P', '3'),
+('Computer Networks', '20CS33P', '3'),
+('Database System Concepts and \r\nPL/SQL', '20CS34P', '3'),
+('Data structures with Python', '20CS41P', '4'),
+('Operating System and Administration', '20CS42P', '4'),
+('Object Oriented Programming and Design with Java', '20CS43P', '4'),
+('Software Engineering principles and practices', '20CS44P', '4'),
+('Indian Constitution', '20CS45T', '4'),
+('Artificial Intelligence and Machine Learning', '20CS51I', '5'),
+('Full Stack Development', '20CS52I', '5'),
+(' Cloud Computing', '20CS53I', '5'),
+('Cyber Security', '20CS54I', '5'),
+('Fundamentals of Electrical & Electronics Engineeri', '20EC01P', '1'),
+('Communication Skills', '20EG01P', '2'),
+('Entrepreneurship and Start up', '20ET51I', '5'),
+('Kannada', '20KA21P', '2'),
+('Kannada Sahitya', '20KA31T ', '3'),
+('Computer Aided Engineering Graphics', '20ME02P', '2'),
+('Project Management Skills', '20PM01T', '2'),
+('Statistics And Analytics', '20SC02P', '2'),
+('Research Methodology', '2ORM53T', '5'),
+('Applied Mathematics', '2OSC51T', '5'),
+('Applied Science', '2OSC52T', '5'),
+('Technical Writing', '2OTW54P', '5');
 
 -- --------------------------------------------------------
 
@@ -155,23 +170,15 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`userid`, `fullname`, `mobile`, `email`, `user_password`, `user_role`, `branch`) VALUES
-('109agfgag', 'asdfgh', 'mobile', 'emsa', 'aaaaaa', 'aaa', 'CS'),
-('109CS1011', 'Ubaid Patel', '09148749147', 'fakeuser595@gmail.com', 'admin', 'STUDENT', 'CS'),
-('109CS10111', 'Ubaid Patel', '09148749147', 'fakeuser595@gmail.com', 'admin', 'STUDENT', 'CS'),
-('109CS1011111', 'Ubaid Patel', '09148749147', 'fakeuser595@gmail.com', 'admin', 'STUDENT', 'CS'),
-('109CS1011222', 'Ubaid Patel', '09148749147', 'fakeuser595@gmail.com', 'admin', 'undefined', 'CS'),
-('109CS20058', 'UBAID PATEL', '9148749147', 'FAKEUSER595@GMAIL.COM', 'qwerty123@', 'faculty', 'CS'),
-('109CS20060', 'AYUB ALI', '9148749147', 'AYUBALI123@GMAIL.COM', 'qwerty123@', 'FACULTY', 'CS'),
-('109NS', 'NAGRAJ SIR', '9184567891', 'AGDADAJDAHGY@HGSS.CHD', 'qwerty123@', 'HOD', 'CS'),
-('JBJ', 'BJB', 'JB', 'J', 'BJ', 'BJ', 'BJ'),
-('KN4259', 'Ubaid Patel', '09148749147', 'fakeuser595@gmail.com', 'ubaid123@', 'STUDENT', 'CS'),
-('KN4259jssss', 'UBAID', '7204479261', 'akbarpatelkua@gmail.com', 'ubaid123@', 'faculty', 'CS'),
-('KN4259jssssdsdfssdf', 'V A MOHAMMED AYUB', '7204479261', 'ayubali200412@gmail.com', 'admin', 'STUDENT', 'ME'),
-('KN4259jsssss', 'V A MOHAMMED AYUB', '7204479261', 'ayubali200412@gmail.com', 'ubaid123@', 'STUDENT', 'ME'),
-('KN4259tttt', 'UBAID', '7204479261', 'akbarpatelkua@gmail.com', 'ubaid123@', 'STUDENT', 'CS'),
-('KNdssfdfd', 'V A MOHAMMED AYUB', '7204479261', 'ayubali200412@gmail.com', 'ubaid123@', 'STUDENT', 'CS'),
-('user3', 'aghdsghjg', 'aas', 'sasa', 'ssa', 'sasa', 'CS'),
-('user4', 'aghdsghjg', 'aas', 'sasa', 'ssa', 'sasa', 'CS');
+('109CS20001', 'Arun Kumar', '9184567891', 'dhfggfdhfdg@gmail.com', 'qwerty123@', 'STUDENT', 'CS'),
+('109CS20002', 'Ubaid Patel', '9148749147', 'fakeuser595@gmail.com', 'qwerty123@', 'STUDENT', 'CS'),
+('109CS20003', 'Sharan gouda patil', '9148740001', 'sdaafsfdsaafaf@gmail.com', 'qwerty123@', 'STUDENT', 'CS'),
+('109CS20004', 'Ayub Ali', '7204479261', 'dssdhjfdddjjdjdjd@jjajja.com', 'qwerty123@', 'STUDENT', 'CS'),
+('109CS20005', 'Sufiyan Khan', '9148700999', 'hjgjhhjfdfdt595@gmail.com', 'qwerty123@', 'STUDENT', 'CS'),
+('109CSAM', 'Ameena Mam', '9148645678', 'ssahjsjgsagsa@dj.com', 'qwerty123@', 'FACULTY', 'CS'),
+('109CSNS', 'Nagraj Sir', '9148711111', 'ssshgsgtfsjjs@gmail.com', 'qwerty123@', 'FACULTY', 'CS'),
+('109CSSUM', 'Sunanda Devi mam', '9148645679', 'ssahjsjgsagqqsa@dj.com', 'qwerty123@', 'HOD', 'CS'),
+('109CSSWM', 'Swapna Mam', '9148709989', 'hjgjhhjfdfdaat595@gmail.com', 'qwerty123@', 'FACULTY', 'CS');
 
 --
 -- Indexes for dumped tables
@@ -181,9 +188,7 @@ INSERT INTO `users` (`userid`, `fullname`, `mobile`, `email`, `user_password`, `
 -- Indexes for table `attendance`
 --
 ALTER TABLE `attendance`
-  ADD KEY `subject froiegn` (`subject`),
-  ADD KEY `student foriegn` (`student`),
-  ADD KEY `teacher froiegn` (`teacher`);
+  ADD PRIMARY KEY (`subject`,`teacher`,`student`,`date`);
 
 --
 -- Indexes for table `branch`
@@ -218,14 +223,6 @@ ALTER TABLE `users`
 --
 -- Constraints for dumped tables
 --
-
---
--- Constraints for table `attendance`
---
-ALTER TABLE `attendance`
-  ADD CONSTRAINT `student foriegn` FOREIGN KEY (`student`) REFERENCES `users` (`userid`),
-  ADD CONSTRAINT `subject froiegn` FOREIGN KEY (`subject`) REFERENCES `subjects` (`code`),
-  ADD CONSTRAINT `teacher froiegn` FOREIGN KEY (`teacher`) REFERENCES `users` (`userid`);
 
 --
 -- Constraints for table `students`

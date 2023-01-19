@@ -25,7 +25,7 @@ if($_POST){
         //$result = mysqli_fetch_assoc($res);
         echo   $str;
         }else{
-            echo "No Records";
+            echo '[{"userid":"noFaculties","name":"noFaculties"}]';
         }
     }else{
         echo "Failed";

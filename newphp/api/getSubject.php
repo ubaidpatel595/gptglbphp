@@ -34,7 +34,7 @@ if($_POST){
         //$result = mysqli_fetch_assoc($res);
         echo   $str;
         }else{
-            echo '{"No Records":"true"}';
+            echo '[{"code":"nosubject","name":"noSubjectsFound"}]';
         }
     }else{
         echo "Failed";
