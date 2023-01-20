@@ -19,7 +19,7 @@ if($_POST){
     $queryType = $_POST['queryType'];
     $getquery = $_POST['query'];
     //echo $getquery;
-    $res = $conn->query($getquery);
+    $res = $conn->multi_query($getquery);
     echo $res;        
     }else{
        echo "Failed";

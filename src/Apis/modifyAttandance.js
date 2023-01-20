@@ -59,7 +59,7 @@ const finalizeattend=(list)=>{
     //Logic variables
     let absecount = 0;
     let prescount = 0;
-    let query;
+    let updquery;
 
     //Api Requirements
     let token = (JSON.parse(localStorage.Authorization).token);
@@ -73,7 +73,7 @@ const finalizeattend=(list)=>{
     let absentquery = "UPDATE attendance SET state ='ABSENT' WHERE ";
 
     for (let x in list){
-        let attended = (document.getElementById(list[x].reg).checked);        
+        let attended = (document.getElementById("modify"+list[x].reg).checked);        
         if(attended){
             //state = "PRESENT";
             prescount +=1; 
@@ -81,7 +81,7 @@ const finalizeattend=(list)=>{
             presentquery = presentquery+qp;
         }else{
             absecount +=1;
-            let qp = `student='${list[x].reg}' OR `
+            let qp = `student='${list[x].reg}' AND date='${selecdate}' OR `
             absentquery = absentquery+qp;
             //state = "ABSENT";
         }           
@@ -95,11 +95,11 @@ const finalizeattend=(list)=>{
     //Submitting Query based on logic
     //alert(absecount)
     if(absecount === 0){
-        query = presentquery;
+        updquery = presentquery;
     }else if(prescount === 0){
-        query = absentquery
+        updquery = absentquery
     }else{
-        query = presentquery+';'+absentquery;
+        updquery = presentquery+';'+absentquery;
     }
 
     //Sending Attendance To Db
@@ -119,9 +119,10 @@ const finalizeattend=(list)=>{
         }
         //alert("Updated")
     }
-    let params = `userid=${teacher}&token=${token}&sem=${sem}&queryType=UPDATE&query=${query}`;
+    let params = `userid=${teacher}&token=${token}&sem=${sem}&queryType=UPDATE&query=${updquery}`;
     ajax.send(params);
-    
+   // alert(document.getElementById("modify109CS20003").checked)
+   // console.log(updquery)
    // alert(query)  
 }
 
@@ -185,7 +186,7 @@ function ModifyAttendance(){
                                         <tr key={data.reg}>
                                             <td>{data.name}</td>
                                             <td>{data.reg}</td>
-                                            <td><input type="checkbox" id={data.reg} defaultChecked={(data.state == "PRESENT" ? true:false)}/></td>
+                                            <td><input type="checkbox" id={"modify"+data.reg} defaultChecked={(data.state == "PRESENT" ? true:false)}/></td>
                                         </tr>
                                     )
                                   })

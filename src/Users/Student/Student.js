@@ -17,7 +17,7 @@ function Student(){
                 <div id="act-btns">
                     <button onClick={()=>{show('action',['gen_reports','upload','upload_opts'])}}>Attendence Report</button><br/>
                     <button onClick={()=>{show('gen_reports',['upload','action','upload_opts'])}}>Marks Reports</button>  <br/> 
-                    <button onClick={()=>{show('upload',['gen_reports','upload_opts'])}}>Syllabus</button><br/>
+                    <button onClick={()=>{show('upload',['action','gen_reports','upload_opts'])}}>Syllabus</button><br/>
                 </div>
                 <div id="action"><Reports type="Attendance"/></div>
                 <div id="gen_reports">

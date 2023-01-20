@@ -5,6 +5,7 @@ import AssignSub from "../../Apis/AssignSub";
 import AssignedSub from "../../Apis/assignedSub";
 import MarkAttendance from "../../Apis/markAttendance";
 import ModifyAttendance from "../../Apis/modifyAttandance";
+ 
 
 function show(elem,hide){
     let opt = document.getElementById(elem);
@@ -18,24 +19,29 @@ function show(elem,hide){
 
 function Hod(){
 const [type,setType]=useState("aa");
+
+//Dummy usestate for efresh when clicked assigned sub
+const [dummy,setDummy]=useState(0);
+ 
     return(
         <div id="actions">
         <div className="flex-hod" >
             <div id="act-btns">
                 <button onClick={()=>{show('action',['ModifyAttendance','gen_reports','upload','upload_opts','assigned','markAttendance'])}}>Assign Subject</button><br/>
-                <button onClick={()=>{show('assigned',['ModifyAttendance','gen_reports','upload','upload_opts','action','markAttendance'])}}>Assigned Subjects</button><br/>
+                <button onClick={()=>{async function refresh(){setDummy(dummy+1)}; refresh().then(show('assigned',['ModifyAttendance','gen_reports','upload','upload_opts','action','markAttendance']))}}>Assigned Subjects</button><br/>
                 <button onClick={()=>{show('markAttendance',['ModifyAttendance','action','upload','upload_opts','assigned','gen_reports'])}}>Mark Attendance</button><br/>
                 <button onClick={()=>{show('ModifyAttendance',['action','upload','upload_opts','assigned','markAttendance'])}}>Modify Attendance</button><br/>
                 <button onClick={()=>{show('gen_reports',['ModifyAttendance','action','upload','upload_opts','assigned','markAttendance'])}}>Generate Reports</button><br/>
                 <button onClick={()=>{show('upload',['ModifyAttendance','gen_reports','action','upload_opts','assigned','markAttendance'])}}>Upload</button><br/>
             </div>
             <div id="action"><AssignSub/></div>
-            <div id="assigned"><AssignedSub/></div>
+            <div id="assigned"><AssignedSub dummy={dummy}/></div>
             <div id="markAttendance"><MarkAttendance/></div>
             <div id="ModifyAttendance"><ModifyAttendance/></div>
             
             <div id="gen_reports">
                 <button>Shortage Of Attendance</button><br/>
+
                 <button>Students Report</button><br/>
                 <button>CIE Makeup Studentlist</button><br/>
                 <button>SEE Makeup Studentlist</button><br/>
