@@ -27,7 +27,7 @@ function signup(data,nav,auth){
     let sem = data.sem
 
     //Sending Parameters in UrlEncoded From
-    let params = `userid=${user_name}&name=${fullname}&mobile=${mobile}&email=${email}&password=${password}&role=${type}&branch=${data.branch}&sem=${sem}`;
+    let params = `userid=${user_name}&fullname=${fullname}&mobile=${mobile}&email=${email}&userPassword=${password}&userRole=${type}&branch=${data.branch}&sem=${sem}`;
     let ajax = new XMLHttpRequest();
     ajax.onload=()=>{
         let response = ajax.responseText;
@@ -43,7 +43,7 @@ function signup(data,nav,auth){
             elem.style="margin:0px";
         }
     };
-    ajax.open("POST","http://127.0.0.1/newphp/api/register.php");
+    ajax.open("POST","http://127.0.0.1:3001/api/Register");
     ajax.setRequestHeader("content-type", "application/x-www-form-urlencoded");
     ajax.send(`${params}`)
     //alert(params)
@@ -52,18 +52,19 @@ function signup(data,nav,auth){
 //Siginin User After Signup
 function authenticate(data,nav){
     //Sending Parameters in UrlEncoded From
-    let params = `userid=${data.mobile}&password=${data.password}`;
+    let params = `mobile=${data.mobile}&password=${data.password}`;
     let ajax = new XMLHttpRequest();
     ajax.onload=()=>{
     let response = ajax.responseText;
     localStorage.setItem("Authorization",response);
-     if (JSON.parse(response).auth == "True"){
+     if (JSON.parse(response).auth == "true"){
       let elem = document.getElementById("result");
+     // console.log(JSON.parse(response).type)
       elem.innerHTML="Success";elem.style="margin:0px";
       setTimeout(()=>{nav("/"+JSON.parse(response).type)},1000)
      }
     }
-    ajax.open("POST","http://127.0.0.1/newphp/api/authorization.php");
+    ajax.open("POST","http://127.0.0.1:3001/api/Authenticate");
     ajax.setRequestHeader("content-type", "application/x-www-form-urlencoded");
     ajax.send(`${params}`)
 }

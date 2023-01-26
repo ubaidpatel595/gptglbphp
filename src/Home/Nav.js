@@ -17,7 +17,7 @@ function change(){
  }
 }
 function Logout(nav,sets){
-    localStorage.setItem("Authorization",'{"auth":"False"}');
+    localStorage.setItem("Authorization",'{"auth":"false"}');
     setTimeout(()=>{nav("/home")},200)
 }
 
@@ -25,7 +25,7 @@ function Nav({Auth}){
     //Using useNAvigate Hook To Redirect User
     const Navigate = useNavigate();
 
-    if(Auth == "True" ){
+    if(Auth == "true" ){
         return(
             <>
             <div id="desk-nav">

@@ -10,7 +10,7 @@ function getFaculty(){
         xhttp.onload = ()=>{
             localStorage.setItem("facultyList",xhttp.responseText)
         };
-        xhttp.open("POST", "http://127.0.0.1/newphp/api/getfaculty.php");
+        xhttp.open("POST", "http://127.0.0.1:3001/api/GetFaculty");
         xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         xhttp.send(params);
 }
@@ -19,12 +19,12 @@ function getFaculty(){
 function getSubject(sem,listopts){
     const xhttp = new XMLHttpRequest();
     let Auth = JSON.parse(localStorage.Authorization);
-    let params = `userid=${Auth.userid}&token=${Auth.token}&sem=${sem}`;
+    let params = `userid=${Auth.userid}&token=${Auth.token}&sem=${sem}&value=${sem}&type=sem`;
     xhttp.onload = ()=>{
         localStorage.setItem("subjectList",xhttp.responseText)
         listopts()
     };
-    xhttp.open("POST", "http://127.0.0.1/newphp/api/getSubject.php");
+    xhttp.open("POST", "http://127.0.0.1:3001/api/GetSubject");
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhttp.send(params);
 }
@@ -60,21 +60,20 @@ function Assign(data) {
     let sem = data.sem;
 
     let Auth = JSON.parse(localStorage.Authorization);
-    let params = `userid=${Auth.userid}&token=${Auth.token}&subject=${sub}&teacher=${teacher}&sem=${sem}&branch=${Auth.branch}`;
+    let params = `userid=${Auth.userid}&token=${Auth.token}&sub=${sub}&teacher=${teacher}&sem=${sem}&type=sem&value=${sem}&branch=${Auth.branch}`;
 
     const xhttp = new XMLHttpRequest();
     xhttp.onload = function() {
-        if(this.responseText == "1"){
+        if(this.responseText == 1){
             document.getElementById("result").innerHTML = "Subject Has Been Alloted Successfully";
         }else{
             document.getElementById("result").innerHTML = "Subject Has Been Already Alloted";
-            console.log(this.responseText)
         }
       
 
-      console.log(JSON.parse(this.responseText));
+      console.log(this.responseText);
       }
-    xhttp.open("POST", "http://127.0.0.1/newphp/api/subjectAllot.php");
+    xhttp.open("POST", "http://127.0.0.1:3001/api/AllotSubject");
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhttp.send(params);
   }

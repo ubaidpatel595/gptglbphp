@@ -4,12 +4,13 @@ import { useForm } from "react-hook-form";
 
 function authenticate(data,nav){
    //Sending Parameters in UrlEncoded From
-   let params = `userid=${data.mobile}&password=${data.password}`;
+   let params = `mobile=${data.mobile}&password=${data.password}`;
    let ajax = new XMLHttpRequest();
    ajax.onload=()=>{
    let response = ajax.responseText;
+  // console.log(response)
    localStorage.setItem("Authorization",response);
-    if (JSON.parse(response).auth == "True"){
+    if (JSON.parse(response).auth == "true"){
      let elem = document.getElementById("result");
      elem.innerHTML="Success";elem.style="margin:0px";
      setTimeout(()=>{nav("/"+JSON.parse(response).type)},1000)
@@ -18,7 +19,7 @@ function authenticate(data,nav){
      elem.innerHTML="Invalid Userid Or Password";elem.style="margin:0px";
     }
    }
-   ajax.open("POST","http://127.0.0.1/newphp/api/authorization.php");
+   ajax.open("POST","http://127.0.0.1:3001/api/Authenticate");
    ajax.setRequestHeader("content-type", "application/x-www-form-urlencoded");
    ajax.send(`${params}`)
 

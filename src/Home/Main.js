@@ -8,7 +8,7 @@ function Main() {
   if(localStorage.Authorization){
     var auth = JSON.parse(localStorage.getItem("Authorization")).auth;
   }else{
-    auth = "False";
+    auth = "false";
   }
   return (
     <>

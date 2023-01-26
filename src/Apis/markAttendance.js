@@ -9,23 +9,37 @@ function getStudent(sem,listupdate,updtsubs){
     let token = auth.token;
    // alert(userid)
     let ajax  = new XMLHttpRequest();
-    ajax.open("POST","http://localhost/newphp/api/getStudent.php");
+    ajax.open("POST","http://127.0.0.1:3001/api/GetStudent");
     ajax.setRequestHeader("Content-Type","application/x-www-form-urlencoded")
     ajax.onload=function (){
-        let subjects = JSON.parse(localStorage.Authorization).subjects;
+
+    //The Below MEthod is only created for testing
+    // let getsubs = new XMLHttpRequest();
+    // getsubs.open("POST","http://127.0.0.1:3001/api/GetSubject");
+    // getsubs.setRequestHeader("Content-Type","application/x-www-form-urlencoded")
+    // getsubs.onload=()=>{
+    //     //console.log(getsubs.responseText)
+    //         let subjects = JSON.parse(getsubs.responseText);
+    //         updtsubs(subjects);
+    //     }
+    
+    // let getsubparam = `userid=${userid}&token=${token}&value=${sem}&type=sem`;
+    // getsubs.send(getsubparam);
+        
+    //This method is for production 
+        let subjects = auth.subjects;
         let sublist = [];
-        for (let x in subjects){
-            if (subjects[x].sem == sem){
-                sublist.push(subjects[x])
+        for(let i in subjects){
+            if(subjects[i].sem == sem){
+                sublist.push(subjects[i])
             }
         }
-        updtsubs(sublist);
+        updtsubs(sublist)
         
-
         listupdate(JSON.parse(this.responseText))
         localStorage.studentList=this.responseText;
         // alert("Loaded");
-        console.log(JSON.parse(this.responseText))
+      //  console.log(JSON.parse(this.responseText))
     }
     let params = `userid=${userid}&token=${token}&sem=${sem}`;
     ajax.send(params);
@@ -98,14 +112,14 @@ const finalizeattend=(list)=>{
     query = query.slice(0,query.length-1)
 
     //Sending Attendance To Db
-
+    console.log(query);
     let ajax  = new XMLHttpRequest();
-    ajax.open("POST","http://localhost/newphp/api/sqlQueryExecuter.php");
+    ajax.open("POST","http://127.0.0.1:3001/api/SqlWriteQueryExecuter");
     ajax.setRequestHeader("Content-Type","application/x-www-form-urlencoded")
     ajax.onload=function (){
         console.log(this.responseText)
         let submitstatus = document.getElementById("submitstatus");
-        if(this.responseText == "1"){
+        if(this.responseText >1){
             submitstatus.innerHTML = "Attendance Submitted";
             submitstatus.style="color:green";
         }else{

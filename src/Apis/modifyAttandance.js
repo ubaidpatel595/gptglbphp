@@ -4,14 +4,31 @@ import {useForm} from "react-hook-form";
 import { useState } from "react";
 
 function updateSublist(sem,updtsubs){
-        let subjects = JSON.parse(localStorage.Authorization).subjects;
-        let sublist = [];
-        for (let x in subjects){
-            if (subjects[x].sem == sem){
-                sublist.push(subjects[x])
-            }
+    //This method is for development testing
+    // let userid = JSON.parse(localStorage.Authorization).userid;
+    // let token = JSON.parse(localStorage.Authorization).token;
+    // let getsubs = new XMLHttpRequest();
+    // getsubs.open("POST","http://127.0.0.1:3001/api/GetSubject");
+    // getsubs.setRequestHeader("Content-Type","application/x-www-form-urlencoded")
+    // getsubs.onload=()=>{
+    //     //console.log(getsubs.responseText)
+    //         let subjects = JSON.parse(getsubs.responseText);
+    //         updtsubs(subjects);
+    //     }
+    
+    // let getsubparam = `userid=${userid}&token=${token}&value=${sem}&type=sem`;
+    // getsubs.send(getsubparam);
+
+    //This method is for production
+    let auth = JSON.parse(localStorage.Authorization);
+    let subjects = auth.subjects;
+    let sublist = [];
+    for(let i in subjects){
+        if(subjects[i].sem == sem){
+            sublist.push(subjects[i])
         }
-        updtsubs(sublist);
+    }
+    updtsubs(sublist)
 }
 
 //Getting Attendance
@@ -24,14 +41,14 @@ function getAttendance(updtlist){
     let subject = document.getElementById("select_subject").value;
  
     let ajax  = new XMLHttpRequest();
-    ajax.open("POST","http://localhost/newphp/api/getAttendance.php");
+    ajax.open("POST","http://127.0.0.1:3001/api/GetAttendance");
     ajax.setRequestHeader("Content-Type","application/x-www-form-urlencoded")
     ajax.onload=function (){
        
         
         localStorage.Attendance=this.responseText;
         //alert("Loaded");
-        console.log(this.responseText)
+       // console.log(this.responseText)
      let a = JSON.parse(this.responseText);
      updtlist(a)
     }
@@ -105,12 +122,12 @@ const finalizeattend=(list)=>{
     //Sending Attendance To Db
 
     let ajax  = new XMLHttpRequest();
-    ajax.open("POST","http://localhost/newphp/api/sqlQueryExecuter.php");
+    ajax.open("POST","http://127.0.0.1:3001/api/SqlWriteQueryExecuter");
     ajax.setRequestHeader("Content-Type","application/x-www-form-urlencoded")
     ajax.onload=function (){
         console.log(this.responseText)
         let modstatus = document.getElementById("modifyresult");
-        if(this.responseText == "1"){
+        if(this.responseText >0){
             modstatus.innerHTML = "Attendance Updated";
             modstatus.style="color:green";
         }else{
@@ -122,8 +139,9 @@ const finalizeattend=(list)=>{
     let params = `userid=${teacher}&token=${token}&sem=${sem}&queryType=UPDATE&query=${updquery}`;
     ajax.send(params);
    // alert(document.getElementById("modify109CS20003").checked)
-   // console.log(updquery)
+   console.log(updquery)
    // alert(query)  
+
 }
 
 function ModifyAttendance(){

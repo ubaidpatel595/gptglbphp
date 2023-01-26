@@ -42,7 +42,7 @@ function AssignedSub({dummy}){
         xhttp.onload = function() {
         updtsublist(this.responseText)
         }
-        xhttp.open("POST", "http://127.0.0.1/newphp/api/assignedsub.php");
+        xhttp.open("POST", "http://127.0.0.1:3001/api/AssignedSubs");
         xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         xhttp.send(params);
     }
