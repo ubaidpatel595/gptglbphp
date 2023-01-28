@@ -8,7 +8,7 @@ function updateSublist(sem,updtsubs){
     // let userid = JSON.parse(localStorage.Authorization).userid;
     // let token = JSON.parse(localStorage.Authorization).token;
     // let getsubs = new XMLHttpRequest();
-    // getsubs.open("POST","http://127.0.0.1:3001/api/GetSubject");
+    // getsubs.open("POST","/api/GetSubject");
     // getsubs.setRequestHeader("Content-Type","application/x-www-form-urlencoded")
     // getsubs.onload=()=>{
     //     //console.log(getsubs.responseText)
@@ -41,7 +41,7 @@ function getAttendance(updtlist){
     let subject = document.getElementById("select_subject").value;
  
     let ajax  = new XMLHttpRequest();
-    ajax.open("POST","http://127.0.0.1:3001/api/GetAttendance");
+    ajax.open("POST","/api/GetAttendance");
     ajax.setRequestHeader("Content-Type","application/x-www-form-urlencoded")
     ajax.onload=function (){
        
@@ -122,7 +122,7 @@ const finalizeattend=(list)=>{
     //Sending Attendance To Db
 
     let ajax  = new XMLHttpRequest();
-    ajax.open("POST","http://127.0.0.1:3001/api/SqlWriteQueryExecuter");
+    ajax.open("POST","/api/SqlWriteQueryExecuter");
     ajax.setRequestHeader("Content-Type","application/x-www-form-urlencoded")
     ajax.onload=function (){
         console.log(this.responseText)
@@ -139,7 +139,7 @@ const finalizeattend=(list)=>{
     let params = `userid=${teacher}&token=${token}&sem=${sem}&queryType=UPDATE&query=${updquery}`;
     ajax.send(params);
    // alert(document.getElementById("modify109CS20003").checked)
-   console.log(updquery)
+  // console.log(updquery)
    // alert(query)  
 
 }

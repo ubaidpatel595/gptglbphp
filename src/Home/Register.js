@@ -32,7 +32,7 @@ function signup(data,nav,auth){
     ajax.onload=()=>{
         let response = ajax.responseText;
         let elem = document.getElementById("result");
-        console.log(response)
+        //console.log(response)
         if(response == "1"){
             elem.innerHTML = "Success";
             elem.style="margin:0px";
@@ -43,7 +43,7 @@ function signup(data,nav,auth){
             elem.style="margin:0px";
         }
     };
-    ajax.open("POST","http://127.0.0.1:3001/api/Register");
+    ajax.open("POST","/api/Register");
     ajax.setRequestHeader("content-type", "application/x-www-form-urlencoded");
     ajax.send(`${params}`)
     //alert(params)
@@ -64,7 +64,7 @@ function authenticate(data,nav){
       setTimeout(()=>{nav("/"+JSON.parse(response).type)},1000)
      }
     }
-    ajax.open("POST","http://127.0.0.1:3001/api/Authenticate");
+    ajax.open("POST","/api/Authenticate");
     ajax.setRequestHeader("content-type", "application/x-www-form-urlencoded");
     ajax.send(`${params}`)
 }

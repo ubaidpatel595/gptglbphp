@@ -9,13 +9,13 @@ function getStudent(sem,listupdate,updtsubs){
     let token = auth.token;
    // alert(userid)
     let ajax  = new XMLHttpRequest();
-    ajax.open("POST","http://127.0.0.1:3001/api/GetStudent");
+    ajax.open("POST","/api/GetStudent");
     ajax.setRequestHeader("Content-Type","application/x-www-form-urlencoded")
     ajax.onload=function (){
 
     //The Below MEthod is only created for testing
     // let getsubs = new XMLHttpRequest();
-    // getsubs.open("POST","http://127.0.0.1:3001/api/GetSubject");
+    // getsubs.open("POST","/api/GetSubject");
     // getsubs.setRequestHeader("Content-Type","application/x-www-form-urlencoded")
     // getsubs.onload=()=>{
     //     //console.log(getsubs.responseText)
@@ -114,7 +114,7 @@ const finalizeattend=(list)=>{
     //Sending Attendance To Db
     console.log(query);
     let ajax  = new XMLHttpRequest();
-    ajax.open("POST","http://127.0.0.1:3001/api/SqlWriteQueryExecuter");
+    ajax.open("POST","/api/SqlWriteQueryExecuter");
     ajax.setRequestHeader("Content-Type","application/x-www-form-urlencoded")
     ajax.onload=function (){
         console.log(this.responseText)

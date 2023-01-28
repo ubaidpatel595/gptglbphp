@@ -10,7 +10,7 @@ function getFaculty(){
         xhttp.onload = ()=>{
             localStorage.setItem("facultyList",xhttp.responseText)
         };
-        xhttp.open("POST", "http://127.0.0.1:3001/api/GetFaculty");
+        xhttp.open("POST", "/api/GetFaculty");
         xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         xhttp.send(params);
 }
@@ -24,7 +24,7 @@ function getSubject(sem,listopts){
         localStorage.setItem("subjectList",xhttp.responseText)
         listopts()
     };
-    xhttp.open("POST", "http://127.0.0.1:3001/api/GetSubject");
+    xhttp.open("POST", "/api/GetSubject");
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhttp.send(params);
 }
@@ -73,7 +73,7 @@ function Assign(data) {
 
       console.log(this.responseText);
       }
-    xhttp.open("POST", "http://127.0.0.1:3001/api/AllotSubject");
+    xhttp.open("POST", "/api/AllotSubject");
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhttp.send(params);
   }
