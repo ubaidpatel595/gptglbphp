@@ -19,7 +19,7 @@ function authenticate(data,nav){
      elem.innerHTML="Invalid Userid Or Password";elem.style="margin:0px";
     }
    }
-   ajax.open("POST","/api/Authenticate");
+   ajax.open("POST","localhost:3001/api/Authenticate");
    ajax.setRequestHeader("content-type", "application/x-www-form-urlencoded");
    ajax.send(`${params}`)
 

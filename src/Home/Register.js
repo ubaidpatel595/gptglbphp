@@ -43,7 +43,7 @@ function signup(data,nav,auth){
             elem.style="margin:0px";
         }
     };
-    ajax.open("POST","/api/Register");
+    ajax.open("POST","localhost:3001/api/Register");
     ajax.setRequestHeader("content-type", "application/x-www-form-urlencoded");
     ajax.send(`${params}`)
     //alert(params)
