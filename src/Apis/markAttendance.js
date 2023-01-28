@@ -114,7 +114,7 @@ const finalizeattend=(list)=>{
     //Sending Attendance To Db
     console.log(query);
     let ajax  = new XMLHttpRequest();
-    ajax.open("POST","/api/SqlWriteQueryExecuter");
+    ajax.open("POST","localhost:3001/api/SqlWriteQueryExecuter");
     ajax.setRequestHeader("Content-Type","application/x-www-form-urlencoded")
     ajax.onload=function (){
         console.log(this.responseText)
