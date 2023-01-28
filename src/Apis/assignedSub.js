@@ -1,5 +1,19 @@
-import { useState } from "react";
 import "../Users/Css/assignedsub.css"
+
+//Get Details Of Assigned Subjects
+function getAssigned(){
+  //  alert("a")
+  const xhttp = new XMLHttpRequest();
+  let Auth = JSON.parse(localStorage.Authorization);
+  let params = `userid=${Auth.userid}&token=${Auth.token}`;
+  xhttp.onload = function() {
+    localStorage.setItem("assignedSubs",xhttp.responseText)
+    }
+  xhttp.open("POST", "http://127.0.0.1/newphp/api/assignedsub.php");
+  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  xhttp.send(params);
+
+}
 
 //Save Assigned Subjects PDf
 function printInfo() {
@@ -28,6 +42,7 @@ function printInfo() {
 }
 
 
+<<<<<<< HEAD
 function AssignedSub({dummy}){
 
     //Array Of Assigned Subjects
@@ -45,18 +60,26 @@ function AssignedSub({dummy}){
         xhttp.open("POST", "/api/AssignedSubs");
         xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         xhttp.send(params);
+=======
+function AssignedSub(){
+    let sublist;
+    if(localStorage.assignedSubs){
+    sublist = JSON.parse(localStorage.assignedSubs)  
+    //sublist = [{sub:"notLoaded",teacher:"notLoaded",sem:"0"}]
+    }else{
+        sublist = [{sub:"notLoaded",teacher:"notLoaded",sem:"0"}]
+>>>>>>> parent of 51d9a2b (Most of the things are working fine)
     }
 
-    window.onload = getAssigned();
     return(
         <>
-        <div style={{display:"none"}}>{}</div>
+        <div style={{display:"none"}}>{getAssigned()}</div>
         <div className="assignedsub" id="a">
         <h1>Assigned Subjects</h1>
         <table>
             <tbody>
             <tr><th>Subject</th><th>Teacher</th><th>Sem</th></tr>
-            {JSON.parse(sublist).map(
+            {sublist.map(
                 (data)=><tr key={data.sub+data.teacher}><td>{data.sub}</td><td>{data.teacher}</td><td>{data.sem}</td></tr>
             )}
             </tbody>
