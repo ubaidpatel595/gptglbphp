@@ -6,7 +6,8 @@ import Nav from './Nav';
 
 function Main() {
   if(localStorage.Authorization){
-    var auth = JSON.parse(localStorage.getItem("Authorization")).auth;
+   var auth = JSON.parse(localStorage.getItem("Authorization")).auth;
+    //var auth = "false";
   }else{
     auth = "false";
   }

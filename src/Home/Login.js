@@ -9,8 +9,8 @@ function authenticate(data,nav){
    ajax.onload=()=>{
    let response = ajax.responseText;
   // console.log(response)
-   localStorage.setItem("Authorization",response);
     if (JSON.parse(response).auth == "true"){
+    localStorage.setItem("Authorization",response);
      let elem = document.getElementById("result");
      elem.innerHTML="Success";elem.style="margin:0px";
      setTimeout(()=>{nav("/"+JSON.parse(response).type)},1000)

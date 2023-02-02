@@ -55,7 +55,8 @@ text-align: center;
 #upload,#gen_reports,#delete{
     display: none;
 }
-#action,#upload_opts,#assigned,#markAttendance,#ModifyAttendance{
+#action,#upload_opts,#assigned,#markAttendance,#ModifyAttendance,#action,#CieReport,#examreport,#iareport,#ciemakeup,#marksreport,#attendshort,
+#SeeReport,#marksrep,#attendrep,#detailedrep,#abstractrep{
     margin-top: 10px;
     min-width: 50vw;
     display: none;
@@ -65,6 +66,8 @@ text-align: center;
     left :0px;
 }
 #action{
+    margin-top: 40px;
+    margin-left: 100px;
     overflow-y: hidden;
 }
 button{
@@ -72,4 +75,33 @@ button{
 }
 #assigned,#markAttendance{
     text-align: center;
+}
+#action table,#action td,#action th{
+    border: 1px solid;
+    border-collapse: collapse;
+}
+#action td{
+     padding-left: 10px;
+     padding-right: 10px;
+     padding-bottom: 3px;
+     padding-top: 3px;
+}
+.hidescroll::-webkit-scrollbar{
+    display: none;
+}
+#CieReport,#SeeReport,#attendrep,#marksrep,#ciemakeup,#marksreport,#attendshort{
+    margin-left: 100px;
+    margin-top: 30px;
+}
+#CieReport table,#CieReport th,#CieReport td,#SeeReport table,#marksrep th,
+#marksrep td,#marksrep table,#attendrep th,#attendrep td,#attendrep table,
+#attendshort table,#attendshort th,#attendshort td,
+#marksreport table,#marksreport td,#marksreport th,
+#ciemakeup table,#ciemakeup th,#ciemakeup td{
+    margin-bottom: 20px;
+    margin-top: 20px;
+    padding-left: 30px;
+    padding-right: 30px;
+    border: 1px solid;
+    border-collapse: collapse;
 }
