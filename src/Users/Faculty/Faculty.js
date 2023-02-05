@@ -18,7 +18,19 @@ function show(elem,hide){
 }
 
 //Getting reports
-function getReport(sem,type,updaterep){
+function getReport(value,type,updaterep){
+    //console.log(value);
+    let auth = JSON.parse(localStorage.Authorization);
+
+    let xhr = new XMLHttpRequest();
+        xhr.withCredentials = true;
+        xhr.addEventListener("readystatechange", function() {
+        if(this.readyState === 4) {
+            updaterep(this.responseText)
+        // console.log(this.responseText);
+        }
+        });
+
     let ajax = new XMLHttpRequest();
     ajax.onload = ()=>{
  //       console.log(ajax.responseText)
@@ -26,28 +38,26 @@ function getReport(sem,type,updaterep){
     }
     let url;
     if(type == "abstract"){
-        url = "http://localhost:3000/getAbstractAttendance";
-        ajax.open("GET",url)
-        ajax.send();
+        xhr.open("POST", "http://localhost:3001/api/AbstractAttendance?subject="+value+
+        "&token="+auth.token+"&userid="+auth.userid);
+        xhr.send();
     }else if(type == "detailed"){
-        url = "http://localhost:3000/getDetailedAttendance";
-        ajax.open("GET",url)
-        ajax.send();
+        xhr.open("POST", "http://localhost:3001/api/DetailedAttendance?&subject="+value+
+        "&token="+auth.token+"&userid="+auth.userid);
+        xhr.send();
     }else if(type = "iamarks"){
-        url = "http://localhost:3000/getiamarks";
-        ajax.open("GET",url)
-        ajax.send();
+        xhr.open("POST", "http://localhost:3001/api/IAMarks?token="+auth.token+"&userid="+auth.userid+"&subject="+value);
+        xhr.send();
     }
 }
 
 function Faculty(){
-    var reptyp = "";
     const [detailedReport,SetDetailedReport] = useState('[{"name":"Ubaid","reg":"109CS20058","attendance":[{"date":"2023-1-23","state":"PRESENT"},{"date":"2023-1-24","state":"PRESENT"},{"date":"2023-1-25","state":"Absent"}]}]')
-    const [abstractReport,setAbstractReport] = useState('[{"name":"Ubaid","reg":"109CS20058","present":"20","absent":"10","total":"30","perc":"80%"}]')
+    const [abstractReport,setAbstractReport] = useState('[{"name":"Ubaid","reg":"109CS20058","present":20,"absent":10}]')
     const [iaReport,setIaReport]=useState('[{"reg":"109CS20058","name":"Ubaid","marks":[22,21,23,45,32]}]')
     return(
         <div id="actions">
-        <div class="flex" style={{margin:"0px"}}>
+        <div className="flex" style={{margin:"0px"}}>
             <div id="act-btns">
                 <button onClick={()=>{show('markAttendance',['marksrep','attendrep','ModifyAttendance','gen_reports','upload','upload_opts'])}}>Mark Attendance</button><br/>
                 <button onClick={()=>{show('ModifyAttendance',['marksrep','attendrep','markAttendance',,'gen_reports','upload','upload_opts'])}}>Modify Attendance</button><br/>
@@ -68,15 +78,33 @@ function Faculty(){
 
             <div id="attendrep">
             Select Type<br/>
-                <select onChange={(e)=>{reptyp= e.target.value;(e.target.value == "detailed")?show('detailedrep',['abstractrep'])
-                    :(e.target.value == "abstract")?show('abstractrep',['detailedrep']):show("attendrep",['abstractrep','detailedrep'])}} >
+                <select onChange={(e)=>{
+                            if(e.target.value == "0"){
+                                show('gen_reports',['abstractrep','detailedrep'])
+                            }else if(e.target.value == "1"){
+                                show('detailedrep',['abstractrep'])
+                            }else{
+                                show('abstractrep',['detailedrep'])
+                        }
+                }} id="attendtyp">
                     <option value="0">Select Type</option>
-                    <option value="detailed">Detailed Attendance Report</option>
-                    <option value="abstract">Abstract Attendance Report</option>
+                    <option value="1">Detailed Attendance Report</option>
+                    <option value="2">Abstract Attendance Report</option>
                 </select><br/>
-            <select onChange={(e)=>{(reptyp == "detailed")?getReport(1,"detailed",SetDetailedReport):
-            (reptyp == "abstract")?getReport(1,"abstract",setAbstractReport):show("attendrep",['abstractrep','detailedrep']);
-            (e.target.value == "0")?show("attendrep",['abstractrep','detailedrep']):(reptyp == "abstract")?show("abstractrep",['detailedrep']):show("detailedrep",['abstractrep'])}}>
+            <select onChange={(e)=>{
+                  if(document.getElementById("attendtyp").value == "0"){
+                    show('gen_reports',['abstractrep','detailedrep'])
+                }else if(document.getElementById("attendtyp").value == "1"){
+                    show('detailedrep',['abstractrep'])
+                    getReport(e.target.value,"detailed",SetDetailedReport)
+                }else{
+                    show('abstractrep',['detailedrep'])
+                    getReport(e.target.value,"abstract",setAbstractReport)
+                }
+                if(e.target.value == "0"){
+                    show('gen_reports',['abstractrep','detailedrep'])
+                }
+            }}>
                         <option value="0">Select Subject</option>
                         {JSON.parse(localStorage.Authorization).subjects.map((data)=>{
                            return<option value={data.code}>{data.name}</option>
@@ -93,8 +121,8 @@ function Faculty(){
             </div>
             <div id="marksrep">
             Select Subject<br/>
-                <select onChange={(e)=>{getReport(1,"iamarks",setIaReport);
-                (e.target.value == "0")?show("marksrep",['iareport','examreport']):show("iareport",['examreport']);
+                <select onChange={(e)=>{getReport(e.target.value,"iamarks",setIaReport);
+                (e.target.value == "0")?show("marksrep",['iareport','examreport']):show("iareport",[]);
                 }}>
                     <option value="0">Select Subject</option>
                    {JSON.parse(localStorage.Authorization).subjects.map((data)=>{

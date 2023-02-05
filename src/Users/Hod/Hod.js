@@ -21,24 +21,25 @@ function show(elem,hide){
 
 //Getting reports
 function HodGetReport(sem,type,updaterep){
-    let ajax = new XMLHttpRequest();
-    ajax.onload = ()=>{
- //       console.log(ajax.responseText)
-        updaterep(ajax.responseText)
-    }
+    let auth = JSON.parse(localStorage.Authorization);
+    let xhr = new XMLHttpRequest();
+    xhr.withCredentials = true;
+    xhr.addEventListener("readystatechange", function() {
+        if(this.readyState === 4) {
+            updaterep(this.responseText)
+          console.log(this.responseText);
+        }
+      });
     let url;
     if(type == "attendance"){
-        url = "http://localhost:3000/attendanceShortage";
-        ajax.open("GET",url)
-        ajax.send();
+        xhr.open("POST", "http://localhost:3001/api/AbstractAttendance?token="+auth.token+"&userid="+auth.userid+"&sem="+sem);
+        xhr.send();
     }else if(type == "cie"){
-        url = "http://localhost:3000/cieMakeup";
-        ajax.open("GET",url)
-        ajax.send();
+        xhr.open("POST", "http://localhost:3001/api/IAMarks?token="+auth.token+"&userid="+auth.userid+"&sem="+sem);
+        xhr.send();
     }else if(type = "marks"){
-        url = "http://localhost:3000/marksreports";
-        ajax.open("GET",url)
-        ajax.send();
+        xhr.open("POST", "http://localhost:3001/api/MarksReport?token="+auth.token+"&userid="+auth.userid+"&Type=HOD&sem="+sem);
+        xhr.send();
     }
 }
 
@@ -48,9 +49,9 @@ const [type,setType]=useState("aa");
 //Dummy usestate for efresh when clicked assigned sub dont remove it
 const [dummy,setDummy]=useState(0);
 
-const [attshortage,setAttShortage] = useState('[{"reg":"109CS20058","name":"Ubaid","subjects":[{"subject":"Engineering Maths","total":30,"present":20,"absent":10,"perc":8}]}]');
-const [cieMakeup,setCieMakeup] = useState('[{"reg":"109CS20058","name":"Ubaid","subjects":[{"subject":"Engineering Maths","average":8}]}]');
-const [marksReport,setMarksReport] = useState('[{"reg":"109CS20058","name":"Ubaid","subjects":[{"name":"Fundamentals","code":"20CS11t","ia":"20","exam":"30","total":"39"}]}]');
+const [attshortage,setAttShortage] = useState('[{"subject":"Engineering Maths","name":"Ubaid","reg":"109CS20058","present":20,"absent":10,"perc":"a"}]');
+const [cieMakeup,setCieMakeup] = useState('[{"reg":"109CS20058","name":"Ubaid","marks":[22,21,23,45,32],"subject":"Fundamentals","code":"109CS2S"}]');
+const [marksReport,setMarksReport] = useState('[{"reg":"109CS20058","name":"Ubaid","subjects":[{"name":"Fundamentals","code":"20CS11t","ia":20,"exam":30}]}]');
  
     return(
         <div id="actions">
@@ -85,7 +86,7 @@ const [marksReport,setMarksReport] = useState('[{"reg":"109CS20058","name":"Ubai
 
            <div id="attendshort">
            Select SEM<br/>
-                <select onChange={()=>{HodGetReport(1,"attendance",setAttShortage)}}>
+                <select onChange={(e)=>{HodGetReport(e.target.value,"attendance",setAttShortage)}}>
                     <option value="0">Select SEM</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
@@ -98,7 +99,7 @@ const [marksReport,setMarksReport] = useState('[{"reg":"109CS20058","name":"Ubai
            </div>
            <div id="marksreport">
                 Select SEM<br/>
-                <select onChange={()=>{HodGetReport(1,"marks",setMarksReport)}}>
+                <select onChange={(e)=>{HodGetReport(e.target.value,"marks",setMarksReport)}}>
                     <option value="0">Select SEM</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
@@ -111,7 +112,7 @@ const [marksReport,setMarksReport] = useState('[{"reg":"109CS20058","name":"Ubai
            </div>
            <div id="ciemakeup">  
            Select SEM<br/>
-                <select onChange={()=>{HodGetReport(1,"cie",setCieMakeup)}}>
+                <select onChange={(e)=>{HodGetReport(e.target.value,"cie",setCieMakeup)}}>
                     <option value="0">Select SEM</option>
                     <option value="1">1</option>
                     <option value="2">2</option>

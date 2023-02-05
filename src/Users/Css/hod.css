@@ -56,7 +56,7 @@ text-align: center;
     display: none;
 }
 #action,#upload_opts,#assigned,#markAttendance,#ModifyAttendance,#action,#CieReport,#examreport,#iareport,#ciemakeup,#marksreport,#attendshort,
-#SeeReport,#marksrep,#attendrep,#detailedrep,#abstractrep{
+#SeeReport,#marksrep,#attendrep,#detailedrep,#abstractrep,#detailed,#abstract{
     margin-top: 10px;
     min-width: 50vw;
     display: none;
@@ -89,19 +89,33 @@ button{
 .hidescroll::-webkit-scrollbar{
     display: none;
 }
-#CieReport,#SeeReport,#attendrep,#marksrep,#ciemakeup,#marksreport,#attendshort{
+#attendrep{
+    margin-left: 50px;
+    margin-top: 30px;
+}
+#CieReport,#SeeReport,#marksrep,#ciemakeup,#marksreport,#attendshort{
     margin-left: 100px;
     margin-top: 30px;
 }
-#CieReport table,#CieReport th,#CieReport td,#SeeReport table,#marksrep th,
-#marksrep td,#marksrep table,#attendrep th,#attendrep td,#attendrep table,
+#CieReport table,#CieReport th,#CieReport td,#SeeReport table,#SeeReport th,#SeeReport td,#marksrep th,
+#marksrep td,#marksrep table,
 #attendshort table,#attendshort th,#attendshort td,
 #marksreport table,#marksreport td,#marksreport th,
 #ciemakeup table,#ciemakeup th,#ciemakeup td{
+    max-width: 650px;
     margin-bottom: 20px;
     margin-top: 20px;
     padding-left: 30px;
     padding-right: 30px;
     border: 1px solid;
     border-collapse: collapse;
+}
+#attendrep th,#attendrep td,#attendrep table{
+    padding-left: 5px;
+    padding-right: 5px;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    border: 1px solid;
+    border-collapse: collapse;
+    text-align: center;
 }

@@ -1,110 +1,49 @@
-{"getAttendanceReport":[
-    {"date":"2023-1-23","subject":"Foc","state":"PRESENT"},
-    {"date":"2023-1-23","subject":"m1","state":"ABSENT"},
-    {"date":"2023-1-24","subject":"Fundamnetals of computers","state":"PRESENT"}
-    ,{"date":"2023-1-25","subject":"Foc","state":"PRESENT"}
-    ,{"date":"2023-1-26","subject":"Foc","state":"PRESENT"}
-    ,{"date":"2023-1-27","subject":"Foc","state":"PRESENT"}
-],
-"getCieReport":[
-    {"marks":200,"subject":"python"},
-    {"marks":200,"subject":"python"},
-    {"marks":200,"subject":"python"},
-    {"marks":200,"subject":"python"}
-],
-"getSeeReport":[
-  {"code":"109CS2S","subject":"Engineering Maths","ia":"20","exam":"30"},
-  {"code":"109CS2S","subject":"Engineering Maths","ia":"20","exam":"30"},
-  {"code":"109CS2S","subject":"Engineering Maths","ia":"20","exam":"30"},
-  {"code":"109CS2S","subject":"Engineering Maths","ia":"20","exam":"30"},
-  {"code":"109CS2S","subject":"Engineering Maths","ia":"20","exam":"30"}
-],
+
+{
 "getDetailedAttendance":[
-    {"name":"Ubaid","reg":"109CS20058","attendance":[{"date":"2023-1-23","state":"PRESENT"},{"date":"2023-1-24","state":"PRESENT"},{"date":"2023-1-5","state":"Absent"}]},
-    {"name":"Ayub Ali","reg":"109CS20060","attendance":[{"date":"2023-1-23","state":"PRESENT"},{"date":"2023-1-24","state":"PRESENT"},{"date":"2023-1-5","state":"Absent"}]}],
+    {"comment":"Attendance Report To Faculty Using Subject","name":"Ubaid","reg":"109CS20058","attendance":[
+        {"subject":"Engineering Maths","date":"2023-1-23","state":"PRESENT"},
+        {"subject":"Engineering Maths","date":"2023-1-24","state":"PRESENT"},
+        {"subject":"Engineering Maths","date":"2023-1-5","state":"Absent"}]},
+    {"name":"Ayub Ali","reg":"109CS20060","attendance":[
+        {"subject":"Engineering Maths","date":"2023-1-23","state":"PRESENT"},
+        {"subject":"Engineering Maths","date":"2023-1-24","state":"PRESENT"},
+        {"subject":"Engineering Maths","date":"2023-1-5","state":"Absent"}]}],
+
+
 "getAbstractAttendance":[
-    {"name":"Ubaid","reg":"109CS20058","present":"20","absent":"10","total":"30","prec":"80%"},
-    {"name":"Ubaid","reg":"109CS20058","present":"20","absent":"10","total":"30","prec":"80%"}
+    {"subject":"Engineering Maths","name":"Ubaid","reg":"109CS20058","present":20,"absent":10},
+    {"subject":"Engineering Maths","name":"Ubaid","reg":"109CS20058","present":20,"absent":10},
+    {"subject":"Engineering Maths","name":"Ubaid","reg":"109CS20058","present":20,"absent":10}
 ]
 ,
-"getiamarks":[
-    {"reg":"109CS20058","name":"Ubaid","marks":[22,21,23,45,32]},
-    {"reg":"109CS20058","name":"Ubaid","marks":[22,21,23,45,32]},
-    {"reg":"109CS20058","name":"Ubaid","marks":[22,21,23,45,32]}
-],
-
-"attendanceShortage":[
-    {"reg":"109CS20058","name":"Ubaid","subjects":[
-        {"subject":"Engineering Maths","total":30,"present":20,"absent":10,"perc":8},
-        {"subject":"Engineering Maths","total":30,"present":20,"absent":10,"perc":80},
-        {"subject":"Engineering Maths","total":30,"present":20,"absent":10,"perc":80},
-        {"subject":"Engineering Maths","total":30,"present":20,"absent":10,"perc":80},
-        {"subject":"Engineering Maths","total":30,"present":20,"absent":10,"perc":80}
-    ]},
-    {"reg":"109CS20058","name":"Ubaid","subjects":[
-        {"subject":"Engineering Maths","total":30,"present":20,"absent":10,"perc":8},
-        {"subject":"Engineering Maths","total":30,"present":20,"absent":10,"perc":80},
-        {"subject":"Engineering Maths","total":30,"present":20,"absent":10,"perc":80},
-        {"subject":"Engineering Maths","total":30,"present":20,"absent":10,"perc":80},
-        {"subject":"Engineering Maths","total":30,"present":20,"absent":10,"perc":80}
-    ]},
-    {"reg":"109CS20058","name":"Ubaid","subjects":[
-        {"subject":"Engineering Maths","total":30,"present":20,"absent":10,"perc":8},
-        {"subject":"Engineering Maths","total":30,"present":20,"absent":10,"perc":80},
-        {"subject":"Engineering Maths","total":30,"present":20,"absent":10,"perc":80},
-        {"subject":"Engineering Maths","total":30,"present":20,"absent":10,"perc":80},
-        {"subject":"Engineering Maths","total":30,"present":20,"absent":10,"perc":80}
-    ]},
-    {"reg":"109CS20058","name":"Ubaid","subjects":[
-        {"subject":"Engineering Maths","total":30,"present":20,"absent":10,"perc":8},
-        {"subject":"Engineering Maths","total":30,"present":20,"absent":10,"perc":80},
-        {"subject":"Engineering Maths","total":30,"present":20,"absent":10,"perc":80},
-        {"subject":"Engineering Maths","total":30,"present":20,"absent":10,"perc":80},
-        {"subject":"Engineering Maths","total":30,"present":20,"absent":10,"perc":80}
-    ]}
-],
-"cieMakeup":[
-    {"reg":"109CS20058","name":"Ubaid","subjects":[
-        {"subject":"Engineering Maths","average":8},
-        {"subject":"Engineering Maths","average":80},
-        {"subject":"Engineering Maths","average":80},
-        {"subject":"Engineering Maths","average":80},
-        {"subject":"Engineering Maths","average":80}
-    ]},
-    {"reg":"109CS20058","name":"Ubaid","subjects":[
-        {"subject":"Engineering Maths","average":8},
-        {"subject":"Engineering Maths","average":80},
-        {"subject":"Engineering Maths","average":80},
-        {"subject":"Engineering Maths","average":80},
-        {"subject":"Engineering Maths","average":80}
-    ]},
-    {"reg":"109CS20058","name":"Ubaid","subjects":[
-        {"subject":"Engineering Maths","average":8},
-        {"subject":"Engineering Maths","average":80},
-        {"subject":"Engineering Maths","average":80},
-        {"subject":"Engineering Maths","average":80},
-        {"subject":"Engineering Maths","average":80}
-    ]}
-],
 "marksreports":[
-    {"reg":"109CS20058","name":"Ubaid","subjects":[
-        {"name":"Fundamentals","code":"20CS11t","ia":"20","exam":"30","total":"30"},
-        {"name":"Fundamentals","code":"20CS11t","ia":"20","exam":"30","total":"30"},
-        {"name":"Fundamentals","code":"20CS11t","ia":"20","exam":"30","total":"30"},
-        {"name":"Fundamentals","code":"20CS11t","ia":"20","exam":"30","total":"30"}
+    {"comment":"Marks Reort To Hod ||Student Using Sem||Reg ","reg":"109CS20058","name":"Ubaid","subjects":[
+        {"subject":"Fundamentals","code":"20CS11t","ia":20,"exam":30},
+        {"subject":"Fundamentals","code":"20CS11t","ia":20,"exam":30},
+        {"subject":"Fundamentals","code":"20CS11t","ia":20,"exam":30},
+        {"subject":"Fundamentals","code":"20CS11t","ia":20,"exam":30}
         ]},
         {"reg":"109CS20058","name":"Ubaid","subjects":[
-            {"name":"Fundamentals","code":"20CS11t","ia":"20","exam":"30","total":"30"},
-            {"name":"Fundamentals","code":"20CS11t","ia":"20","exam":"30","total":"30"},
-            {"name":"Fundamentals","code":"20CS11t","ia":"20","exam":"30","total":"30"},
-            {"name":"Fundamentals","code":"20CS11t","ia":"20","exam":"30","total":"30"}
+            {"subject":"Fundamentals","code":"20CS11t","ia":20,"exam":30},
+            {"subject":"Fundamentals","code":"20CS11t","ia":20,"exam":30},
+            {"subject":"Fundamentals","code":"20CS11t","ia":20,"exam":30},
+            {"subject":"Fundamentals","code":"20CS11t","ia":20,"exam":30}
             ]}
         , {"reg":"109CS20058","name":"Ubaid","subjects":[
-            {"name":"Fundamentals","code":"20CS11t","ia":"20","exam":"30","total":"30"},
-            {"name":"Fundamentals","code":"20CS11t","ia":"20","exam":"30","total":"30"},
-            {"name":"Fundamentals","code":"20CS11t","ia":"20","exam":"30","total":"30"},
-            {"name":"Fundamentals","code":"20CS11t","ia":"20","exam":"30","total":"30"}
+            {"subject":"Fundamentals","code":"20CS11t","ia":20,"exam":30},
+            {"subject":"Fundamentals","code":"20CS11t","ia":20,"exam":30},
+            {"subject":"Fundamentals","code":"20CS11t","ia":20,"exam":30},
+            {"subject":"Fundamentals","code":"20CS11t","ia":20,"exam":30}
             ]}
+],
+
+"getiamarks":[
+    {"comment":"Ia Marks to faculty||student using Sub||Reg","reg":"109CS20058","name":"Ubaid","marks":[22,21,23,45,32],"subject":"Fundamentals","code":"109CS2S"},
+    {"reg":"109CS20058","name":"Ubaid","marks":[22,21,23,45,32],"subject":"Fundamentals","code":"109CS2S"},
+    {"reg":"109CS20059","name":"Ubaid","marks":[22,21,23,45,32],"subject":"Fundamentals","code":"109CS2S"},
+    {"reg":"109CS20059","name":"Ubaid","marks":[22,21,23,45,32],"subject":"Fundamentals","code":"109CS2S"}
+
 ]
 
 }

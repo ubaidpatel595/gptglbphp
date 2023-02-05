@@ -16,12 +16,12 @@ function MarksReport({report}){
                             <tbody>
                                 {data.subjects.map((sub)=>{
                               return<tr>
-                                    <td>{sub.name}</td>
+                                    <td>{sub.subject}</td>
                                     <td>{sub.code}</td>
                                     <td>{sub.ia}</td>
                                     <td>{sub.exam}</td>
-                                    <td>{sub.total}</td>
-                                    <td>{(sub.total > 30 )?"Pass":"Fail"}</td>
+                                    <td>{sub.ia+sub.exam}</td>
+                                    <td>{((sub.ia+sub.exam) > 30 )?"Pass":"Fail"}</td>
                                     </tr>
                                 })}
                             </tbody>

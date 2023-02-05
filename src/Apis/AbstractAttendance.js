@@ -9,11 +9,11 @@ function AbstractAttendance({report}){
                      return<tr>
                      <td>{data.name}</td>
                      <td>{data.reg}</td>
-                     <td>{data.name}</td>
+                     <td>{data.subject}</td>
                      <td>{data.present}</td>
                      <td>{data.absent}</td>
-                     <td>{data.total}</td>
-                     <td>{data.perc}</td>
+                     <td>{data.present+data.absent}</td>
+                     <td>{Math.round(data.present*100/(data.absent+data.present))}</td>
                      </tr>
                 })}
             </tbody>

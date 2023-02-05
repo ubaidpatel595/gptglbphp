@@ -7,7 +7,7 @@ function DetailedAttendance({report}){
                     JSON.parse(report).map((data)=>{
                         let present = 0;
                         let absent = 0;
-                        console.log(data)
+                        //console.log(data)
                         for (let i in data.attendance){
                             if(data.attendance[i].state == "PRESENT"){
                                 present +=1;
@@ -16,7 +16,7 @@ function DetailedAttendance({report}){
                             }
                         }
                         let perc = 0 ;
-                        perc = absent*100/present;
+                        perc = Math.round(present*100/(absent+present));
                         return<tr>
                         <td> 
                             <table>
