@@ -19,7 +19,7 @@ function getFaculty(){
 function getSubject(sem,listopts){
     const xhttp = new XMLHttpRequest();
     let Auth = JSON.parse(localStorage.Authorization);
-    let params = `userid=${Auth.userid}&token=${Auth.token}&sem=${sem}&value=${sem}&type=sem`;
+    let params = `userid=${Auth.userid}&token=${Auth.token}&sem=${sem}&value=${sem}&type=sem&branch=${Auth.branch}`;
     xhttp.onload = ()=>{
         localStorage.setItem("subjectList",xhttp.responseText)
         listopts()
@@ -64,7 +64,7 @@ function Assign(data) {
 
     const xhttp = new XMLHttpRequest();
     xhttp.onload = function() {
-        if(this.responseText == 1){
+        if(this.responseText === 1){
             document.getElementById("result").innerHTML = "Subject Has Been Alloted Successfully";
         }else{
             document.getElementById("result").innerHTML = "Subject Has Been Already Alloted";
@@ -99,6 +99,7 @@ function AssignSub(){
                         <td>Staff:</td>
                         <td>
                             <select name="teacher" id="staff" {...register("teacher")}>
+                                <option value="0">Select Faculty</option>
                                 {
                                Facultylist.map(faculty => 
                                <option key={faculty['userid']} value={faculty['userid']} > {faculty['name']} </option>)

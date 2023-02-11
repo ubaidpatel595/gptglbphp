@@ -1,6 +1,8 @@
 function AbstractAttendance({report}){
+
     return(
-        <table>
+       <>
+         <table>
             <thead>
                 <tr><th>Student</th><th>Reg</th><th>Subject</th><th>Present</th><th>Absent</th><th>Total</th><th>Perc</th></tr>
             </thead>
@@ -18,6 +20,7 @@ function AbstractAttendance({report}){
                 })}
             </tbody>
         </table>
+       </>
     )
 }
 export default AbstractAttendance;

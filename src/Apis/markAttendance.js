@@ -1,9 +1,8 @@
 import "./assign.css";
 import "../Home/Css/login.css";
-import {useForm} from "react-hook-form";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-function getStudent(sem,listupdate,updtsubs){
+function getStudent(sub,listupdate,updtsubs){
     let auth = JSON.parse(localStorage.Authorization);
     let userid = auth.userid;
     let token = auth.token;
@@ -11,37 +10,22 @@ function getStudent(sem,listupdate,updtsubs){
     let ajax  = new XMLHttpRequest();
     ajax.open("POST","http://127.0.0.1:3001/api/GetStudent");
     ajax.setRequestHeader("Content-Type","application/x-www-form-urlencoded")
-    ajax.onload=function (){
-
-    //The Below MEthod is only created for testing
-    // let getsubs = new XMLHttpRequest();
-    // getsubs.open("POST","http://127.0.0.1:3001/api/GetSubject");
-    // getsubs.setRequestHeader("Content-Type","application/x-www-form-urlencoded")
-    // getsubs.onload=()=>{
-    //     //console.log(getsubs.responseText)
-    //         let subjects = JSON.parse(getsubs.responseText);
-    //         updtsubs(subjects);
-    //     }
-    
-    // let getsubparam = `userid=${userid}&token=${token}&value=${sem}&type=sem`;
-    // getsubs.send(getsubparam);
-        
-    //This method is for production 
-        let subjects = auth.subjects;
-        let sublist = [];
-        for(let i in subjects){
-            if(subjects[i].sem == sem){
-                sublist.push(subjects[i])
-            }
-        }
-        updtsubs(sublist)
-        
+    ajax.onload=function (){  
         listupdate(JSON.parse(this.responseText))
         localStorage.studentList=this.responseText;
         // alert("Loaded");
       //  console.log(JSON.parse(this.responseText))
     }
-    let params = `userid=${userid}&token=${token}&sem=${sem}`;
+    function subdetails(){
+        let subjects = auth.subjects;
+        for(let i in subjects){
+            if(subjects[i].code === sub){
+                //console.log(subjects[i].branch)
+               return subjects[i];
+            }
+        }
+    }      
+    let params = `userid=${userid}&token=${token}&sem=${subdetails().sem}&branch=${subdetails().branch}`;
     ajax.send(params);
 }
   
@@ -61,8 +45,19 @@ const finalizeattend=(list)=>{
     let teacher = (JSON.parse(localStorage.Authorization).userid);
 
     //Api Requirements
-    let token = (JSON.parse(localStorage.Authorization).token);
-    let sem = document.getElementById("selectsem").value;
+    let auth = JSON.parse(localStorage.Authorization);
+    let token = auth.token;
+
+    function subdetails(){
+        let subjects = auth.subjects;
+        for(let i in subjects){
+            if(subjects[i].code === subject){
+                //console.log(subjects[i].branch)
+               return subjects[i];
+            }
+        }
+    }     
+    let sem = subdetails().sem;
 
     let type = document.getElementById("attendancetype").value;
 
@@ -95,14 +90,12 @@ const finalizeattend=(list)=>{
         } 
        // alert(" Some Absent")
     }else if(type === "allpresent"){
-        for (let x in list){
-            let attended = (document.getElementById(list[x].reg).checked);            
+        for (let x in list){          
             query = query+`('${subject}','${teacher}','${list[x].reg}','PRESENT'),`;
         } 
        // alert(" All Present")
     }else{
-        for (let x in list){
-            let attended = (document.getElementById(list[x].reg).checked);            
+        for (let x in list){          
             query = query+`('${subject}','${teacher}','${list[x].reg}','ABSENT'),`;
         } 
         //alert("All Absent")
@@ -137,38 +130,26 @@ const finalizeattend=(list)=>{
 function MarkAttendance(){
     const [studentlist,updateList] = useState([{reg:"not loaded",name:"not loaded",sem:"0"}]);
     const [subjectlist,updatesubjects] = useState([{name:"No subjects found",code:"sdds",sem:"1"}]);  
-     
+    useEffect(()=>{
+        if(localStorage.Authorization){
+            updatesubjects(JSON.parse(localStorage.Authorization).subjects)
+        }
+    },[])
     return(
         <>
         {/* <h1>Hello World</h1> */}
-        <div id="login-form">
-            <h4 id="submitstatus" style={{display:"none"}}></h4>
-            <h4 id="result"></h4>
+        <div id="login-form" style={{maxHeight:"450px",overflowY:"auto"}} className="hidescroll">
+            <h4 id="submitstatus" style={{display:"none"}}>""</h4>
             <form >
                 <table>
                     <tbody>
                     <tr>
-                        <td>Sem:</td>
-                        <td> 
-                            <select name="sem" id="selectsem" onChange={(e)=>{getStudent(e.target.value,updateList,updatesubjects)}}>
-                                <option key="val" value="1">Select Sem</option>
-                                <option key="1" value="1">1</option>
-                                <option key="2" value="2">2</option>
-                                <option key="3" value="3">3</option>
-                                <option key="4" value="4">4</option>
-                                <option key="5" value="5">5</option>
-                                <option key="6" value="6">6</option>
-                            </select>
-                        </td>
-                    </tr>
-
-                    <tr>
                         <td>Subject:</td>
                         <td> 
-                            <select name="subject" id="selectsubject">
+                            <select name="subject" id="selectsubject" onChange={(e)=>{getStudent(e.target.value,updateList,updatesubjects)}} >
                                 <option value="1">Select Subject</option>
-                                {subjectlist.map((d)=>{
-                                    return <option key={d.code} value={d.code}>{d.name}</option>
+                                {subjectlist.map((d,i)=>{
+                                    return <option data={i} value={d.code}>{d.name}</option>
                                 })}
                             </select>
                         </td>

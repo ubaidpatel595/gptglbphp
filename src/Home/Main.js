@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import './Css/index.css';
 import Header from './Header';
 import Nav from './Nav';

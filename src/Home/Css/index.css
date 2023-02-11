@@ -134,3 +134,10 @@ text-align: center;
     border-collapse: collapse;
     padding: 5px;
 }
+a{
+    text-decoration: none;
+    color: black;
+}
+.hide{
+    display: none;
+}

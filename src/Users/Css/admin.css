@@ -26,13 +26,13 @@ text-align: center;
     background-color: inherit;
     margin-right: 50px;
 }
-#act-btns,#upload,#view,#delete{
+#act-btns,#upload,#view{
     margin-top: 10px;
     padding-right: 20px;
     margin-left:0px;
     height: 80vh;
 }
-#act-btns button{
+.buttons{
     border-radius: 10px;
     margin-top: 20px;
     margin-left: 30px;
@@ -43,7 +43,7 @@ text-align: center;
     height: 30px;
 }
 
-#upload button,#view button,#delete button{
+.actButtons{
     border-radius: 10px;
     margin-top: 20px;
     margin-left: 30px;
@@ -64,4 +64,14 @@ text-align: center;
 }
 body{
     overflow-y:scroll;
+}
+.active{
+    background-color: rgba(104, 139, 168, 0.959);
+}
+.inactive{
+    background-color: rgba(147, 197, 238, 0.959);
+}
+#delete{
+    margin-left: 40px;
+    height: 150px;
 }

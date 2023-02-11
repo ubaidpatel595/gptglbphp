@@ -1,18 +1,10 @@
 import "../Css/hod.css";
 import Syllabus from "../../Apis/Syllabus";
-import Reports from "../../Apis/Reports";
 import { useState } from "react";
-import DetailedAttendance from "../../Apis/Detailedattendance";
 import AbstractAttendance from "../../Apis/AbstractAttendance";
-//For Nav Bar Functionality
-function show(elem,hide){
-    let opt = document.getElementById(elem);
-    opt.style="display:block";
-    for(let x in hide){
-        let opt = document.getElementById(hide[x]);
-        opt.style="display:none";
-    }
-}
+import { savePdf } from "../Faculty/Faculty";
+import { show } from "../Admin/Admin";
+import { showEvent } from "../Admin/Admin";
 
 //Getting Cie Report Ajax Call
 function getCieReport(updatecie){
@@ -60,11 +52,11 @@ function getAttendanceBySub(type,value,updtAtt){
         updtAtt(this.responseText)
     }
     });
-    if(type == "abstract"){
+    if(type === "abstract"){
         xhr.open("POST", "http://localhost:3001/api/AbstractAttendance?reg="+auth.userid+
         "&subject="+value+"&token="+auth.token+"&userid="+auth.userid);
         xhr.send();
-    }else if(type == "detailed"){
+    }else if(type === "detailed"){
         console.log("A")
         xhr.open("POST", "http://localhost:3001/api/DetailedAttendance?reg="+auth.userid+
         "&subject="+value+"&token="+auth.token+"&userid="+auth.userid+"&type="+auth.type);
@@ -75,7 +67,7 @@ function getAttendanceBySub(type,value,updtAtt){
         let res = JSON.parse(ajax.responseText);
         let classcount = [0,0];
         for(let i in res){
-            if(res[i].state == "PRESENT"){
+            if(res[i].state === "PRESENT"){
                 classcount[0]=classcount[0]+1;
             }else{
                 classcount[1]=classcount[1]+1;
@@ -89,73 +81,45 @@ function getAttendanceBySub(type,value,updtAtt){
 }
 
 function Student(){
-    let typ ="op";
-    function setTyp(t){
-        typ = t;
-    }
-    function getTyp(){
-        return typ;
-    }
-    
     const [CieReport,SetCieReport] = useState('[{"reg":"notLoaded","name":"Not Loaded","marks":[0,0,0,0,0],"subject":"Null","code":"null"}]');
     const [SeeReport,SetSeeReport] = useState('[{"reg":"notLoaded","name":"Not Loaded","subjects":[{"name":"Not Loaded","code":"Null","ia":0,"exam":0}]}]');
-    const [detailedReport,SetDetailedReport] = useState('[{"name":"Not Loaded","reg":"notLoaded","attendance":[{"date":"Null","state":"Null"}]}]')
     const [abstractReport,setAbstractReport] = useState('[{"name":"Not Loaded","reg":"notLoaded","present":0,"absent":0}]')
     return(
         <div id="actions">
             <div className="flex" style={{margin:"0px"}}>
                 <div id="act-btns">
-                    <button onClick={()=>{show('action',['SeeReport','CieReport','gen_reports','upload_opts'])}}>Attendence Report</button><br/>
-                    <button onClick={()=>{show('gen_reports',['SeeReport','CieReport','upload_opts','action'])}}>Marks Reports</button>  <br/> 
-                    <button onClick={()=>{show('upload_opts',['SeeReport','CieReport','action','gen_reports'])}}>Show Syllabus</button><br/>
+                    <button className="buttons"  onClick={(e)=>{showEvent(e,'action',['SeeReport','CieReport','gen_reports','upload_opts'])}}>Attendence Report</button><br/>
+                    <button className="buttons" onClick={(e)=>{showEvent(e,'gen_reports',['SeeReport','CieReport','upload_opts','action'])}}>Marks Reports</button>  <br/> 
+                    <button className="buttons" onClick={(e)=>{showEvent(e,'upload_opts',['SeeReport','CieReport','action','gen_reports'])}}>Show Syllabus</button><br/>
                 </div>
                 <div id="action">
-                    Select Type <br/>
-                    <select id="attendtyp" onChange={
-                        (e)=>{
-                            if(e.target.value == "0"){
-                                show('action',['abstract','detailed'])
-                            }else if(e.target.value == "1"){
-                                show('detailed',['abstract'])
-                            }else{
-                                show('abstract',['detailed'])
-                            }
-                        }
-                    }>
-                        <option value="0">Select type</option>
-                        <option value="1">Detailed Attendance Report</option>
-                        <option value="2">Abstract Attendance Report</option>
-                    </select><br/>
                     <select onChange={(e)=>{
-                        if(document.getElementById("attendtyp").value == "0"){
-                            show('action',['abstract','detailed']);  
-                        }else if(document.getElementById("attendtyp").value == "1"){
-                            getAttendanceBySub("detailed",e.target.value,SetDetailedReport)
+                        if(e.target.value === "0"){
+                            show('action',['abstract','detailed']);
                         }else{
+                            show('abstract',[]);
                             getAttendanceBySub("abstract",e.target.value,setAbstractReport);
                         }
-                        if(e.target.value == "0"){
-                            show('action',['abstract','detailed']);
-                        }
-                    }}>
+                    }} style={{marginTop:"30px"}}>
                         <option value="0">Select Subject</option>
                         {JSON.parse(localStorage.Authorization).subjects.map((data)=>{
                             return(
                                 <option value={data.code}>{data.name}</option>
                             )
                         })}
-                    </select><br/><br/>
-                    <div id="detailed"><DetailedAttendance report={detailedReport}/></div>
-                    <div id="abstract"><AbstractAttendance report={abstractReport}/></div>
+                    </select> <button style={{marginLeft:"20px"}} onClick={()=>{savePdf("abstract")}}>Save as pdf</button> <br/><br/>
+                    {/* <div id="detailed"><DetailedAttendance report={detailedReport}/></div> */}
+                    <div id="abstract"  className="hidescroll" style={{height:"350px",overflowY:"auto"}}><AbstractAttendance report={abstractReport}/></div>
                     {/* <Reports report={attendance} classCnt={classCnt}/> */}
                 </div>
                 <div id="gen_reports">
-                    <button onClick={()=>{show('CieReport',['SeeReport','action','upload_opts']);getCieReport(SetCieReport)}}>Cie Marks</button><br/>
-                    <button onClick={()=>{show('SeeReport',['CieReport','action','upload_opts']);}}>See Results</button><br/>
+                    <button className="actButtons" onClick={(e)=>{showEvent(e,'CieReport',['SeeReport','action','upload_opts']);getCieReport(SetCieReport)}}>Cie Marks</button><br/>
+                    <button className="actButtons" onClick={(e)=>{showEvent(e,'SeeReport',['CieReport','action','upload_opts']);}}>See Results</button><br/>
                 </div>
                <div id="upload_opts"><Syllabus/></div>
                <div id="CieReport">
-                <div>
+               <button style={{marginLeft:"20px"}} onClick={()=>{savePdf("cieMarksReport")}}>Save as pdf</button>
+                <div id="cieMarksReport">
                     <table>
                         <thead>
                             <tr><th>Subject</th><th>Code</th>
@@ -192,8 +156,8 @@ function Student(){
                     <option value="4">4</option>
                     <option value="5">5</option>
                     <option value="6">6</option>
-                </select>
-                <div>
+                </select><button style={{marginLeft:"20px"}} onClick={()=>{savePdf("seeMarksReport")}}>Save as pdf</button>
+                <div id="seeMarksReport">
                     <table>
                         <thead>
                         <tr>

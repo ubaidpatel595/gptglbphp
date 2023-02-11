@@ -9,14 +9,15 @@ function authenticate(data,nav){
    ajax.onload=()=>{
    let response = ajax.responseText;
   // console.log(response)
-    if (JSON.parse(response).auth == "true"){
+    if (JSON.parse(response).auth === "true"){
     localStorage.setItem("Authorization",response);
+    localStorage.setItem("mobile",data.mobile)
      let elem = document.getElementById("result");
-     elem.innerHTML="Success";elem.style="margin:0px";
-     setTimeout(()=>{nav("/"+JSON.parse(response).type)},1000)
+     elem.innerHTML="Success";elem.style="margin:0px;display:block";
+     setTimeout(()=>{nav("/Dashboard")},1000)
     }else{
      let elem = document.getElementById("result");
-     elem.innerHTML="Invalid Userid Or Password";elem.style="margin:0px";
+     elem.innerHTML="Invalid Userid Or Password";elem.style="margin:0px;display:block";
     }
    }
    ajax.open("POST","http://127.0.0.1:3001/api/Authenticate");
@@ -33,7 +34,7 @@ function Login(){
  
     return(
         <div id="login-form">
-        <h4 id="result"></h4>
+        <h4 id="result" style={{margin:"0px"}}>&nbsp;</h4>
         <form action="" onSubmit={handleSubmit(auth_params)}>
             <table>
                 <tr><td>Mobile:</td>

@@ -1,42 +1,36 @@
 import "./assign.css";
 import "../Home/Css/login.css";
-import {useForm} from "react-hook-form";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function updateSublist(sem,updtsubs){
-    //This method is for development testing
-    // let userid = JSON.parse(localStorage.Authorization).userid;
-    // let token = JSON.parse(localStorage.Authorization).token;
-    // let getsubs = new XMLHttpRequest();
-    // getsubs.open("POST","http://127.0.0.1:3001/api/GetSubject");
-    // getsubs.setRequestHeader("Content-Type","application/x-www-form-urlencoded")
-    // getsubs.onload=()=>{
-    //     //console.log(getsubs.responseText)
-    //         let subjects = JSON.parse(getsubs.responseText);
-    //         updtsubs(subjects);
-    //     }
-    
-    // let getsubparam = `userid=${userid}&token=${token}&value=${sem}&type=sem`;
-    // getsubs.send(getsubparam);
-
     //This method is for production
     let auth = JSON.parse(localStorage.Authorization);
     let subjects = auth.subjects;
     let sublist = [];
     for(let i in subjects){
-        if(subjects[i].sem == sem){
+        if(subjects[i].sem === sem){
             sublist.push(subjects[i])
         }
     }
     updtsubs(sublist)
 }
-
+function subdetails(){
+    let auth = JSON.parse(localStorage.Authorization);
+    let sub = document.getElementById("select_subject").value;
+    let subjects = auth.subjects;
+    for(let i in subjects){
+        if(subjects[i].code === sub){
+            //console.log(subjects[i].branch)
+           return subjects[i];
+        }
+    }
+}     
 //Getting Attendance
 function getAttendance(updtlist){
     let auth = JSON.parse(localStorage.Authorization);
     let userid = auth.userid;
     let token = auth.token;
-    let sem = document.getElementById("selectsemester").value;
+    let sem = subdetails().sem;
     let attend_date = document.getElementById("selectdate").value;
     let subject = document.getElementById("select_subject").value;
  
@@ -56,21 +50,7 @@ function getAttendance(updtlist){
     ajax.send(params);
 }
 
-//Type Based Attendance Logic
-const updateType=(e)=>{
-    let typ = e.target.value;
-    if( typ === "allpresent" || typ ==="allabsent"){
-        document.getElementById("tickstudent").style="display:none"
-        document.getElementById("studentlist").style="display:none"
-    }else{
-      document.getElementById("tickstudent").style="display:;text-align:center"
-      document.getElementById("studentlist").style="display:;" 
-    }
-
-}
-
 const finalizeattend=(list)=>{
-    let subject = (document.getElementById("selectsubject").value);
     let teacher = (JSON.parse(localStorage.Authorization).userid);
 
     //Logic variables
@@ -82,8 +62,6 @@ const finalizeattend=(list)=>{
     let token = (JSON.parse(localStorage.Authorization).token);
     let sem = document.getElementById("selectsem").value;
     let selecdate = document.getElementById("selectdate").value;
-
-    let type = document.getElementById("attendancetype").value;
 
     //Creating Query
     let presentquery = "UPDATE attendance SET state ='PRESENT' WHERE ";
@@ -129,7 +107,7 @@ const finalizeattend=(list)=>{
         let modstatus = document.getElementById("modifyresult");
         if(this.responseText >0){
             modstatus.innerHTML = "Attendance Updated";
-            modstatus.style="color:green";
+            modstatus.style="color:green;";
         }else{
             modstatus.innerHTML = "Something went wrong";
             modstatus.style="color:red";
@@ -146,36 +124,27 @@ const finalizeattend=(list)=>{
 
 function ModifyAttendance(){
     const [studentlist,updateList] = useState([{reg:"notloaded",name:"not loaded",sem:"0"}]);
-    const [subjectlist,updatesubjects] = useState([{name:"No subjects found",code:"sdds",sem:"1"}]);  
+    const [subjectlist,updatesubjects] = useState([{name:"No subjects found",code:"sdds",sem:"1"}]);
+    useEffect(()=>{
+        if(localStorage.Authorization){
+            let subs = JSON.parse(localStorage.Authorization).subjects;
+            updatesubjects(subs)
+        }         
+    },[])  
      
     return(
         <>
         {/* <h1>Hello World</h1> */}
-        <div id="login-form">
-            <h4 id="submitstatus" style={{display:"none"}}></h4>
-            <h4 id="modifyresult"></h4>
+        <div id="login-form" style={{maxHeight:"450px",overflowY:"auto"}} className="hidescroll">
+            <h4 id="submitstatus" style={{display:"none"}}>""</h4>
+            <h4 id="modifyresult">&nbsp;</h4>
             <form >
                 <table>
                     <tbody>
                     <tr>
-                      <td>Sem:</td>
+                      <td>Date:</td>
                       <td><input id="selectdate" type="date"/></td>
                     </tr>
-                    <tr>
-                        <td>Sem:</td>
-                        <td> 
-                            <select name="sem" id="selectsemester" onChange={(e)=>{updateSublist(e.target.value,updatesubjects)}} >
-                                <option value="1w">Select Sem</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
-                                <option value="6">6</option>
-                            </select>
-                        </td>
-                    </tr>
-
                     <tr>
                         <td>Subject:</td>
                         <td> 
@@ -204,7 +173,7 @@ function ModifyAttendance(){
                                         <tr key={data.reg}>
                                             <td>{data.name}</td>
                                             <td>{data.reg}</td>
-                                            <td><input type="checkbox" id={"modify"+data.reg} defaultChecked={(data.state == "PRESENT" ? true:false)}/></td>
+                                            <td><input type="checkbox" id={"modify"+data.reg} defaultChecked={(data.state === "PRESENT" ? true:false)}/></td>
                                         </tr>
                                     )
                                   })

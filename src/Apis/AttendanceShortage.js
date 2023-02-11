@@ -9,7 +9,7 @@ function AttendanceShortage({report}){
        // console.log(Math.round(average/report[0].marks.length))
        
         for(let i in report ){
-            if(report[i].reg == prev){
+            if(report[i].reg === prev){
                     let newobj = arr.pop()
                     let subobj = {
                         subject:report[i].subject,
@@ -37,25 +37,22 @@ function AttendanceShortage({report}){
                     stud.name = report[i].name;
                     stud.subjects = [];
                     stud.subjects.push(subobj);
-                    if(Math.round(report[i].present*100/(report[i].present+report[i].absent))<71){
+                    if(Math.round(report[i].present*100/(report[i].present+report[i].absent))>71){
                         arr.push(stud)
                         prev = report[i].reg;
                     }
-                   // console.log(stud)
+                    if(arr.length == 0 ){
+                        let obj = {reg:"notFound",name:"No Shortage",subjects:[{subject:"No Shortage of Attendance Found",present:0,absent:0,total:0,perc:0,}]}
+                        arr.push(obj)
+                    }
                    }
         }}
-        console.log(arr)
     convertShort();
-
-
     return(    
-                <table>
-                <tbody>
+                <div id="attendShortage" className="largeTable hidescroll">
                             {//Displaying  Shortage OF Attendance
                               arr.map((data)=>{
-                              return<tr>
-                                    <td>
-                                    <table>
+                              return<table>
                                     <thead>
                                         <tr><th colSpan={6} style={{textAlign:"center"}} >Reg no {data.reg} , Name : {data.name}</th></tr>
                                         <tr>
@@ -74,13 +71,10 @@ function AttendanceShortage({report}){
                                         })}
                                     </tbody>
                                 </table>
-                                </td>
-                                </tr>
                                 })
                             }
                        
-                </tbody>
-            </table>
+                       </div>
     )
 }
 export default AttendanceShortage;

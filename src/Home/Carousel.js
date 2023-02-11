@@ -2,7 +2,7 @@ import "./Css/carousel.css"
 var count = 1 ;
 function change_image(direction,id){
     if(document.getElementById(id)){
-        if (direction == 1){
+        if (direction === 1){
             if(count < 5){
                 let img  = document.getElementById(id);
                 img.setAttribute("src",`images/${count+1}.jpg`)

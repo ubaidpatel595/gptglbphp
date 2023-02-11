@@ -1,107 +1,169 @@
-#header{
+#header {
     background-color: rgb(171, 196, 218);
 }
 
-#logo{
+#logo {
     height: 100px;
 }
 
-#name{
-text-align: center;
+#name {
+    text-align: center;
 }
 
-.flex-hod{
+.flex-hod {
     display: flex;
     width: max-content;
 }
-#nav{
+
+#nav {
     margin-top: 20px;
     background-color: rgb(26, 137, 235);
 }
-#nav button{
-    border:none;
+
+#nav button {
+    border: none;
     font-size: 20px;
     color: white;
     background-color: inherit;
     margin-right: 50px;
 }
-#act-btns,#upload,#view,#delete{
+
+#act-btns,
+#upload,
+#view{
     margin-top: 10px;
     padding-right: 20px;
-    margin-left:0px;
-    
+    margin-left: 0px;
+
 }
-#act-btns button{
+
+.buttons {
     border-radius: 10px;
     margin-top: 20px;
     margin-left: 30px;
-    background-color:rgba(147, 197, 238, 0.959);
+    background-color: rgba(147, 197, 238, 0.959);
     font-size: large;
     border: none;
     min-width: 80px;
     height: 30px;
 }
 
-#upload button,#gen_reports button,#delete button{
+.actButtons{
     border-radius: 10px;
     margin-top: 30px;
     margin-left: 30px;
-    background-color:rgba(147, 197, 238, 0.959);
+    background-color: rgba(147, 197, 238, 0.959);
     font-size: large;
     border: none;
     min-width: 80px;
     height: 30px;
 }
-#upload,#gen_reports,#delete{
+
+#upload,
+#gen_reports,
+#delete {
     display: none;
 }
-#action,#upload_opts,#assigned,#markAttendance,#ModifyAttendance,#action,#CieReport,#examreport,#iareport,#ciemakeup,#marksreport,#attendshort,
-#SeeReport,#marksrep,#attendrep,#detailedrep,#abstractrep,#detailed,#abstract{
+
+#action,
+#upload_opts,
+#semUploadOpts,
+#assigned,
+#markAttendance,
+#ModifyAttendance,
+#action,
+#CieReport,
+#examreport,
+#iareport,
+#ciemakeup,
+#marksreport,
+#attendshort,
+#SeeReport,
+#marksrep,
+#attendrep,
+#detailedrep,
+#abstractrep,
+#detailed,
+#abstract {
     margin-top: 10px;
     min-width: 50vw;
     display: none;
 }
-#actions{
+
+#actions {
     position: relative;
-    left :0px;
+    left: 0px;
 }
-#action{
+
+#action {
     margin-top: 40px;
     margin-left: 100px;
     overflow-y: hidden;
 }
-button{
+
+button {
     cursor: pointer;
 }
-#assigned,#markAttendance{
+
+#assigned,
+#markAttendance {
     text-align: center;
 }
-#action table,#action td,#action th{
+
+#action table,
+#action td,
+#action th {
     border: 1px solid;
     border-collapse: collapse;
 }
-#action td{
-     padding-left: 10px;
-     padding-right: 10px;
-     padding-bottom: 3px;
-     padding-top: 3px;
+
+#action td {
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 3px;
+    padding-top: 3px;
 }
-.hidescroll::-webkit-scrollbar{
+
+.hidescroll::-webkit-scrollbar {
     display: none;
 }
-#attendrep{
+
+#attendrep {
     margin-left: 50px;
     margin-top: 30px;
 }
-#CieReport,#SeeReport,#marksrep,#ciemakeup,#marksreport,#attendshort{
+#report{
+    height: 350px;
+    overflow-y: scroll;
+}
+#CieReport,
+#SeeReport,
+#marksrep,
+#ciemakeup,
+#marksreport,
+#attendshort {
     margin-left: 100px;
     margin-top: 30px;
 }
-#CieReport table,#CieReport th,#CieReport td,#SeeReport table,#SeeReport th,#SeeReport td,#marksrep th,
-#marksrep td,#marksrep table,
-#attendshort table,#attendshort th,#attendshort td,
-#marksreport table,#marksreport td,#marksreport th,
-#ciemakeup table,#ciemakeup th,#ciemakeup td{
+
+#CieReport table,
+#CieReport th,
+#CieReport td,
+#SeeReport table,
+#SeeReport th,
+#SeeReport td,
+#marksrep th,
+#marksrep td,
+#marksrep table,
+#attendshort table,
+#attendshort th,
+#attendshort td,
+#marksreport table,
+#marksreport td,
+#marksreport th,
+#ciemakeup table,
+#ciemakeup th,
+#ciemakeup td {
     max-width: 650px;
     margin-bottom: 20px;
     margin-top: 20px;
@@ -110,7 +172,27 @@ button{
     border: 1px solid;
     border-collapse: collapse;
 }
-#attendrep th,#attendrep td,#attendrep table{
+
+.oneReport table,
+.oneReport th,
+.oneReport td {
+    text-align: center;
+    border: 1px solid;
+    border-collapse: collapse;
+    padding-left: 5px;
+    padding-right: 5px;
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-top: 20px;
+}
+
+.center {
+    text-align: center;
+}
+
+.table,
+.table th,
+.table td {
     padding-left: 5px;
     padding-right: 5px;
     margin-bottom: 20px;
@@ -118,4 +200,22 @@ button{
     border: 1px solid;
     border-collapse: collapse;
     text-align: center;
+}
+
+.hide {
+    display: none;
+}
+#marksrep{
+    height: 350px;
+    overflow-y: scroll;
+}
+.largeTable{
+    height: 450px;
+    overflow: scroll;
+}
+.active{
+    background-color: rgba(104, 139, 168, 0.959);
+}
+.inactive{
+    background-color: rgba(147, 197, 238, 0.959);
 }

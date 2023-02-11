@@ -10,8 +10,10 @@ import Login from './Home/Login';
 import Logout from './Home/Logout';
 import Register from './Home/Register';
 import About from './Home/About';
+import Profile from './Home/Profile';
 
 //Users
+import Dashboard from './Home/Dashboard';
 import Admin from './Users/Admin/Admin';
 import Hod from './Users/Hod/Hod';
 import Faculty from './Users/Faculty/Faculty';
@@ -44,6 +46,8 @@ const router = createBrowserRouter([
   {path:'hod',element:<><Main/><Hod/></>},
   {path:'faculty',element:<><Main/><Faculty/></>},
   {path:'student',element:<><Main/><Student/></>},
+  {path:'Dashboard',element:<><Main/><Dashboard/></>},
+  {path:'Profile',element:<><Main/><Profile user={JSON.parse(localStorage.Authorization)}/></>},
 
   //Apis 
   {path:'AssignSub',element:<><AssignSub/></>},

@@ -27,7 +27,7 @@ function CIEMakeup({report}){
                
             
                 
-                if(report[i].reg == prev){
+                if(report[i].reg === prev){
                     let newobj = arr.pop()
                     let subobj = {subject:report[i].subject,average:average};
                     newobj.subjects.push(subobj);
@@ -48,17 +48,14 @@ function CIEMakeup({report}){
                     console.log(stud)
                    }
         }}
-        console.log(arr)
+       // console.log(arr)
     }
     convert();
     return(
-        <table>
-                <tbody>
+        <div id="CieMakeupReport" className="largeTable hidescroll">
                             {//Displaying  CIE MAkeup Studnets
                               arr.map((data)=>{
-                              return<tr>
-                                    <td>
-                                    <table>
+                              return<table>
                                     <thead>
                                         <tr><th colSpan={5} style={{textAlign:"center"}} >Reg no {data.reg} , Name : {data.name}</th></tr>
                                         <tr>
@@ -74,13 +71,10 @@ function CIEMakeup({report}){
                                         })}
                                     </tbody>
                                 </table>
-                                </td>
-                                </tr>
                                 })
                             }
                        
-                </tbody>
-            </table>
+                </div>
     )
 }
 export default CIEMakeup;

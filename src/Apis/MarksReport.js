@@ -1,12 +1,9 @@
 function MarksReport({report}){
     return(
-        <table>
-        <tbody>
+        <div id="marksReportHod" className="largeTable hidescroll">
                     {//Displaying  Shortage OF Attendance
                         JSON.parse(report).map((data)=>{
-                      return<tr>
-                            <td>
-                            <table>
+                      return<table>
                             <thead>
                                 <tr><th colSpan={6} style={{textAlign:"center"}} >Reg no {data.reg} , Name : {data.name}</th></tr>
                                 <tr>
@@ -26,13 +23,10 @@ function MarksReport({report}){
                                 })}
                             </tbody>
                         </table>
-                        </td>
-                        </tr>
                         })
                     }
                
-        </tbody>
-    </table>
+               </div>
     )
 }
 export default MarksReport;

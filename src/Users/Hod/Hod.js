@@ -8,16 +8,9 @@ import ModifyAttendance from "../../Apis/modifyAttandance";
 import CIEMakeup from "../../Apis/CIEMakeup";
 import MarksReport from "../../Apis/MarksReport";
 import AttendanceShortage from "../../Apis/AttendanceShortage";
- 
-
-function show(elem,hide){
-    let opt = document.getElementById(elem);
-    opt.style="display:block";
-    for(let x in hide){
-        let opt = document.getElementById(hide[x]);
-        opt.style="display:none";
-    }
-}
+import { savePdf } from "../Faculty/Faculty";
+import { show } from "../Admin/Admin";
+import { showEvent } from "../Admin/Admin";
 
 //Getting reports
 function HodGetReport(sem,type,updaterep){
@@ -30,26 +23,25 @@ function HodGetReport(sem,type,updaterep){
           console.log(this.responseText);
         }
       });
-    let url;
-    if(type == "attendance"){
+    if(type === "attendance"){
         xhr.open("POST", "http://localhost:3001/api/AbstractAttendance?token="+auth.token+"&userid="+auth.userid+"&sem="+sem);
         xhr.send();
-    }else if(type == "cie"){
+    }else if(type === "cie"){
         xhr.open("POST", "http://localhost:3001/api/IAMarks?token="+auth.token+"&userid="+auth.userid+"&sem="+sem);
         xhr.send();
-    }else if(type = "marks"){
+    }else if(type === "marks"){
         xhr.open("POST", "http://localhost:3001/api/MarksReport?token="+auth.token+"&userid="+auth.userid+"&Type=HOD&sem="+sem);
         xhr.send();
     }
 }
 
 function Hod(){
-const [type,setType]=useState("aa");
+const [type,setType]=useState("");
 
 //Dummy usestate for efresh when clicked assigned sub dont remove it
 const [dummy,setDummy]=useState(0);
 
-const [attshortage,setAttShortage] = useState('[{"subject":"Engineering Maths","name":"Ubaid","reg":"109CS20058","present":20,"absent":10,"perc":"a"}]');
+const [attshortage,setAttShortage] = useState('[{"subject":"Engineering Maths","name":"Ubaid","reg":"109CS20058","present":90,"absent":10}]');
 const [cieMakeup,setCieMakeup] = useState('[{"reg":"109CS20058","name":"Ubaid","marks":[22,21,23,45,32],"subject":"Fundamentals","code":"109CS2S"}]');
 const [marksReport,setMarksReport] = useState('[{"reg":"109CS20058","name":"Ubaid","subjects":[{"name":"Fundamentals","code":"20CS11t","ia":20,"exam":30}]}]');
  
@@ -57,12 +49,12 @@ const [marksReport,setMarksReport] = useState('[{"reg":"109CS20058","name":"Ubai
         <div id="actions">
         <div className="flex-hod" >
             <div id="act-btns">
-                <button onClick={()=>{show('action',['ciemakeup','attendshort','marksreport','ModifyAttendance','gen_reports','upload','upload_opts','assigned','markAttendance'])}}>Assign Subject</button><br/>
-                <button onClick={()=>{async function refresh(){setDummy(dummy+1)}; refresh().then(show('assigned',['ciemakeup','attendshort','marksreport','ModifyAttendance','gen_reports','upload','upload_opts','action','markAttendance']))}}>Assigned Subjects</button><br/>
-                <button onClick={()=>{show('markAttendance',['ciemakeup','attendshort','marksreport','ModifyAttendance','action','upload','upload_opts','assigned','gen_reports'])}}>Mark Attendance</button><br/>
-                <button onClick={()=>{show('ModifyAttendance',['gen_reports','ciemakeup','attendshort','marksreport','action','upload','upload_opts','assigned','markAttendance'])}}>Modify Attendance</button><br/>
-                <button onClick={()=>{show('gen_reports',['ciemakeup','attendshort','marksreport','ModifyAttendance','action','upload','upload_opts','assigned','markAttendance'])}}>Generate Reports</button><br/>
-                <button onClick={()=>{show('upload',['ciemakeup','attendshort','marksreport','ModifyAttendance','gen_reports','action','upload_opts','assigned','markAttendance'])}}>Upload</button><br/>
+                <button className="buttons" onClick={(e)=>{showEvent(e,'action',['ciemakeup','attendshort','marksreport','ModifyAttendance','gen_reports','upload','upload_opts','assigned','markAttendance'])}}>Assign Subject</button><br/>
+                <button className="buttons" onClick={(e)=>{async function refresh(){setDummy(dummy+1)}; refresh().then(showEvent(e,'assigned',['ciemakeup','attendshort','marksreport','ModifyAttendance','gen_reports','upload','upload_opts','action','markAttendance']))}}>Assigned Subjects</button><br/>
+                <button className="buttons" onClick={(e)=>{showEvent(e,'markAttendance',['ciemakeup','attendshort','marksreport','ModifyAttendance','action','upload','upload_opts','assigned','gen_reports'])}}>Mark Attendance</button><br/>
+                <button className="buttons" onClick={(e)=>{showEvent(e,'ModifyAttendance',['gen_reports','ciemakeup','attendshort','marksreport','action','upload','upload_opts','assigned','markAttendance'])}}>Modify Attendance</button><br/>
+                <button className="buttons" onClick={(e)=>{showEvent(e,'gen_reports',['ciemakeup','attendshort','marksreport','ModifyAttendance','action','upload','upload_opts','assigned','markAttendance'])}}>Generate Reports</button><br/>
+                <button className="buttons" onClick={(e)=>{showEvent(e,'upload',['ciemakeup','attendshort','marksreport','ModifyAttendance','gen_reports','action','upload_opts','assigned','markAttendance'])}}>Upload</button><br/>
             </div>
             <div id="action"><AssignSub/></div>
             <div id="assigned"><AssignedSub dummy={dummy}/></div>
@@ -70,14 +62,14 @@ const [marksReport,setMarksReport] = useState('[{"reg":"109CS20058","name":"Ubai
             <div id="ModifyAttendance"><ModifyAttendance/></div>
             
             <div id="gen_reports">
-                <button onClick={()=>{show("attendshort",['marksreport','ciemakeup'])}}>Shortage Of Attendance</button><br/>
-                <button onClick={()=>{show("marksreport",['attendshort','ciemakeup'])}}>Students Report</button><br/>
-                <button onClick={()=>{show("ciemakeup",['marksreport','attendshort'])}}>CIE Makeup Students</button><br/>
+                <button className="actButtons" onClick={(e)=>{showEvent(e,"attendshort",['marksreport','ciemakeup'])}}>Shortage Of Attendance</button><br/>
+                <button className="actButtons" onClick={(e)=>{showEvent(e,"marksreport",['attendshort','ciemakeup'])}}>Students Report</button><br/>
+                <button className="actButtons" onClick={(e)=>{showEvent(e,"ciemakeup",['marksreport','attendshort'])}}>CIE Makeup Students</button><br/>
             </div>
 
             <div id="upload">
-                <button onClick={()=>{show('upload_opts',['gen_reports',"action",]);setType("Sem Results")}}>SEM Results </button><br/>
-                <button onClick={()=>{show('upload_opts',['gen_reports',"action",]);setType("Ia Marks")}}>IA Marks</button><br/>
+                <button className="actButtons" onClick={(e)=>{showEvent(e,'upload_opts',['gen_reports',"action",]);setType("semMarks")}}>SEM Results </button><br/>
+                <button className="actButtons" onClick={(e)=>{showEvent(e,'upload_opts',['gen_reports',"action",]);setType("iaMarks")}}>IA Marks</button><br/>
             </div>
 
            <div id="upload_opts">
@@ -95,6 +87,7 @@ const [marksReport,setMarksReport] = useState('[{"reg":"109CS20058","name":"Ubai
                     <option value="5">5</option>
                     <option value="6">6</option>
                 </select>
+            <button style={{marginLeft:"20px"}} onClick={()=>{savePdf("attendShortage")}}>Save as pdf</button>
            <AttendanceShortage report={attshortage}/>
            </div>
            <div id="marksreport">
@@ -107,7 +100,7 @@ const [marksReport,setMarksReport] = useState('[{"reg":"109CS20058","name":"Ubai
                     <option value="4">4</option>
                     <option value="5">5</option>
                     <option value="6">6</option>
-                </select>
+                </select> <button style={{marginLeft:"20px"}} onClick={()=>{savePdf("marksReportHod")}}>Save as pdf</button>
                 <MarksReport report={marksReport}/>
            </div>
            <div id="ciemakeup">  
@@ -120,7 +113,7 @@ const [marksReport,setMarksReport] = useState('[{"reg":"109CS20058","name":"Ubai
                     <option value="4">4</option>
                     <option value="5">5</option>
                     <option value="6">6</option>
-                </select>
+                </select><button style={{marginLeft:"20px"}} onClick={()=>{savePdf("CieMakeupReport")}}>Save as pdf</button>
            <CIEMakeup report={cieMakeup}/>
            </div>
         </div>

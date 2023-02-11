@@ -1,12 +1,11 @@
-import { useState } from "react";
-import { Link,NavLink, useNavigate} from "react-router-dom";
+import { Link} from "react-router-dom";
 import "./Css/index.css";
 var cnt = 1;
 function change(){
     let elem = document.getElementById("menu");
     elem.classList.toggle("change")
 
- if (cnt == 1){
+ if (cnt === 1){
     let menu = document.getElementById("mob-nav");
     menu.className="show";
     cnt -=1;
@@ -16,16 +15,9 @@ function change(){
     cnt=1;
  }
 }
-function Logout(nav,sets){
-    localStorage.setItem("Authorization",'{"auth":"false"}');
-    setTimeout(()=>{nav("/home")},200)
-}
-
 function Nav({Auth}){
     //Using useNAvigate Hook To Redirect User
-    const Navigate = useNavigate();
-
-    if(Auth == "true" ){
+    if(Auth === "true" ){
         return(
             <>
             <div id="desk-nav">

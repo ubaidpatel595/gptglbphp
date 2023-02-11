@@ -1,15 +1,15 @@
 
 function DetailedAttendance({report}){
     return(
-        <table>
-            <tbody>
+        
+       <div id="detRepo">
                 {
                     JSON.parse(report).map((data)=>{
                         let present = 0;
                         let absent = 0;
                         //console.log(data)
                         for (let i in data.attendance){
-                            if(data.attendance[i].state == "PRESENT"){
+                            if(data.attendance[i].state === "PRESENT"){
                                 present +=1;
                             }else{
                                 absent +=1;
@@ -17,9 +17,7 @@ function DetailedAttendance({report}){
                         }
                         let perc = 0 ;
                         perc = Math.round(present*100/(absent+present));
-                        return<tr>
-                        <td> 
-                            <table>
+                        return<table class="oneReport">
                                 <thead>
                                     <tr>
                                         <th colSpan={3}>
@@ -41,12 +39,9 @@ function DetailedAttendance({report}){
                                     })}
                                 </tbody>
                             </table>
-                        </td>
-                   </tr>
                     })
                 }
-            </tbody>
-        </table>
+       </div>
     )
 }
 

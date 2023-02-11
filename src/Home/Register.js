@@ -6,7 +6,7 @@ var type;
 function change_usertype(typ){
     let elem = document.getElementById("user_id");
     type=typ;
-    if(typ=="STUDENT"){
+    if(typ==="STUDENT"){
         document.getElementById("semselect").style="display:";
         elem.innerHTML="Reg No:"
 
@@ -33,7 +33,7 @@ function signup(data,nav,auth){
         let response = ajax.responseText;
         let elem = document.getElementById("result");
         console.log(response)
-        if(response == "1"){
+        if(response === "1"){
             elem.innerHTML = "Success";
             elem.style="margin:0px";
             auth(data,nav);
@@ -57,7 +57,7 @@ function authenticate(data,nav){
     ajax.onload=()=>{
     let response = ajax.responseText;
     localStorage.setItem("Authorization",response);
-     if (JSON.parse(response).auth == "true"){
+     if (JSON.parse(response).auth === "true"){
       let elem = document.getElementById("result");
      // console.log(JSON.parse(response).type)
       elem.innerHTML="Success";elem.style="margin:0px";
@@ -79,7 +79,7 @@ function Register(){
     const { register, handleSubmit } = useForm();
     return(
         <div id="login-form">
-            <h4 id="result"></h4>
+            <h4 id="result">""</h4>
             <form onSubmit={handleSubmit(signup_params)}>
                 <table>
                     <tr>

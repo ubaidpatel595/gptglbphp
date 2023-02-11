@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "../Users/Css/assignedsub.css"
-
+import "./assign.css"
 //Save Assigned Subjects PDf
 function printInfo() {
    let style = `div{width: 100%;background-color: rgba(119, 164, 185, 0.776);margin-top: 30px;
@@ -27,31 +27,31 @@ function printInfo() {
     openWindow.close();
 }
 
-
-function AssignedSub({dummy}){
-
-    //Array Of Assigned Subjects
-    const [sublist,updtsublist] = useState(JSON.stringify([{sub:"in stat",teacher:"notLoaded",sem:"0"}]));
-
     //Get Details Of Assigned Subjects Via Ajax
-    function getAssigned(){
+    function getAssigned(updt){
         const xhttp = new XMLHttpRequest();
         let Auth = JSON.parse(localStorage.Authorization);
         let params = `userid=${Auth.userid}&token=${Auth.token}`;
 
         xhttp.onload = function() {
-        updtsublist(this.responseText)
+        updt(this.responseText)
         }
         xhttp.open("POST", "http://127.0.0.1:3001/api/AssignedSubs");
         xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         xhttp.send(params);
     }
+    
+function AssignedSub({dummy}){
 
-    window.onload = getAssigned();
+    //Array Of Assigned Subjects
+    const [sublist,updtsublist] = useState(JSON.stringify([{sub:"in stat",teacher:"notLoaded",sem:"0"}]));
+
+    useEffect(()=>{getAssigned(updtsublist)},[])
     return(
         <>
+        <button id="submit-button" onClick={()=>{printInfo()}}>Save as pdf</button>
         <div style={{display:"none"}}>{}</div>
-        <div className="assignedsub" id="a">
+        <div className="assignedsub hidescroll" id="a" style={{height:"350px",overflowY:"auto"}} >
         <h1>Assigned Subjects</h1>
         <table>
             <tbody>
@@ -62,7 +62,6 @@ function AssignedSub({dummy}){
             </tbody>
         </table>
         </div>
-        <button id="submit-button" onClick={()=>{printInfo()}}>Save</button>
         </>
     )
 }

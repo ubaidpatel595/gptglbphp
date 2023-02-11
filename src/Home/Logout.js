@@ -5,7 +5,7 @@ function Logout(){
     localStorage.setItem("Authorization",'{"auth":"False"}');
     setTimeout(()=>{Navigate("/")},0);
     return(
-        <h1></h1>
+        <h1>Logged Out</h1>
     )
 }
 export default Logout;
